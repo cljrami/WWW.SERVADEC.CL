@@ -1,10 +1,43 @@
 ---
+import Footer from "../components/Footer/Footer.astro";
+import GlobalSeo from "../components/Seo/GlobalSeo.astro";
 import "../styles/global.css";
+import "animate.css";
 import "aos/dist/aos.css";
 
-import "animate.css";
+// import Header from "../components/Header.astro";
+
+export interface Props {
+  title?: string;
+  description?: string;
+  seo?: {
+    openGraph?: any;
+    twitter?: any;
+    extend?: any;
+    schemaData?: any; // Cambiado de 'schema' a 'schemaData'
+  };
+}
+
+const { title, description, seo } = Astro.props;
 ---
 
-<slot />
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <GlobalSeo
+      title={title}
+      description={description}
+      openGraph={seo?.openGraph}
+      twitter={seo?.twitter}
+      extend={seo?.extend}
+      schemaData={seo?.schemaData}
+    />
+  </head>
 
-<script src="../js/aos"></script>
+  <slot />
+  <Footer />
+  <script src="../js/aos"></script>
+</html>

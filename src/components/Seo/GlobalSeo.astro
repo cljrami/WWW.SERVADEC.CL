@@ -1,0 +1,125 @@
+---
+import { SEO } from "astro-seo";
+import { Schema } from "astro-seo-schema";
+import type { TwitterCardType } from "astro-seo";
+
+export interface Props {
+  title?: string;
+  description?: string;
+  openGraph?: {
+    basic: {
+      title: string;
+      type: string;
+      image: string;
+      url?: string;
+    };
+    optional?: {
+      audio?: string;
+      description?: string;
+      determiner?: string;
+      locale?: string;
+      localeAlternate?: string[];
+      siteName?: string;
+      video?: string;
+    };
+  };
+  twitter?: {
+    card?: TwitterCardType;
+    site?: string;
+    creator?: string;
+    title?: string;
+    description?: string;
+    image?: string;
+    imageAlt?: string;
+  };
+  extend?: {
+    link?: Record<string, any>[];
+    meta?: Record<string, any>[];
+  };
+  schemaData?: any;
+  item?: any;
+}
+
+const {
+  title = "Administración de Condominios | Nombre de la Empresa",
+  description = "Servicios profesionales de administración de condominios...",
+  openGraph,
+  twitter,
+  extend,
+  schemaData,
+  item,
+} = Astro.props;
+
+// Valores por defecto para Open Graph
+const defaultOpenGraph = {
+  basic: {
+    title: title,
+    type: "website",
+    image: "https://www.tuempresa.com/social.jpg",
+    url: "https://www.tuempresa.com" + Astro.url.pathname,
+  },
+  optional: {
+    siteName: "Nombre de la Empresa",
+    locale: "es_CL",
+  },
+};
+
+// Combina props del usuario con los valores por defecto
+const combinedOpenGraph = {
+  basic: {
+    ...defaultOpenGraph.basic,
+    ...(openGraph?.basic || {}),
+  },
+  optional: {
+    ...defaultOpenGraph.optional,
+    ...(openGraph?.optional || {}),
+  },
+};
+
+// Schema.org
+const defaultOrganizationSchema = {
+  "@type": "Organization",
+  "@id": "https://www.tuempresa.com/#organization",
+  name: "Nombre de la Empresa",
+  url: "https://www.tuempresa.com/",
+  logo: "https://www.tuempresa.com/logo.png",
+  description: "Servicios profesionales de administración de condominios",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Dirección de la empresa",
+    addressLocality: "Ciudad",
+    addressRegion: "Región",
+    postalCode: "Código Postal",
+    addressCountry: "País",
+  },
+  contactPoint: {
+    "@type": "ContactPoint",
+    telephone: "+569XXXXXXXX",
+    contactType: "customer service",
+    email: "contacto@tuempresa.com",
+  },
+  sameAs: [
+    "https://www.facebook.com/tuempresa",
+    "https://www.instagram.com/tuempresa",
+    "https://www.linkedin.com/company/tuempresa",
+  ],
+};
+
+// Combina schema personalizado con el default
+const fullSchema = {
+  "@context": "https://schema.org",
+  ...(schemaData || defaultOrganizationSchema),
+};
+---
+
+<!-- SEO Meta Tags -->
+<SEO
+  title={title}
+  description={description}
+  openGraph={combinedOpenGraph}
+  twitter={twitter}
+  extend={extend}
+/>
+
+<!-- Schema.org estructurado -->
+<Schema item={fullSchema} />

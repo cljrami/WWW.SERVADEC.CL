@@ -1,89 +1,85 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import WSPBtn from "../components/WSPBtn/WSPBtn.astro";
-import HomeSlider from "../components/HomeSLider/HomeSlider";
-
-import { SEO } from "astro-seo";
-import { Schema } from "astro-seo-schema";
 import Faq from "../components/Faq/Faq.astro";
+import HomeSlider from "../components/HomeSLider/HomeSlider.jsx";
 import TestimonialSlider from "../components/TestimonialSlider/TestimonialSlider.jsx";
-import Footer from "../components/Footer/Footer.astro";
-import DarkModeToggle from "../components/DarkModeToggle/DarkModeToggle.astro";
+import WSPBtn from "../components/WSPBtn/WSPBtn.astro";
+// Datos específicos de SEO para la página principal
+const pageTitle = "Inicio";
+const pageDescription =
+  "Ofrecemos servicios profesionales de administración de condominios. Gestión eficiente, transparente y personalizada para comunidades residenciales en toda la región.";
+
+// Schema.org específico para la página principal
+const homePageSchema = {
+  "@type": "WebPage",
+  "@id": "https://www.tuempresa.com/#webpage",
+  url: "https://www.tuempresa.com/",
+  name: pageTitle,
+  description: pageDescription,
+  isPartOf: {
+    "@id": "https://www.tuempresa.com/#website",
+  },
+  about: {
+    "@type": "Service",
+    name: "Administración de Condominios",
+    description:
+      "Servicio profesional de administración de condominios y edificios residenciales",
+    provider: {
+      "@id": "https://www.tuempresa.com/#organization",
+    },
+    areaServed: {
+      "@type": "City",
+      name: "Nombre de tu Ciudad",
+    },
+  },
+  offers: {
+    "@type": "Offer",
+    description:
+      "Servicios de administración de condominios con planes personalizados",
+    url: "https://www.tuempresa.com/servicios/",
+  },
+};
 ---
 
-<html lang="es">
-  <head>
-    <Schema
-      item={{
-        "@context": "https://schema.org",
-        "@type": "Person",
-        name: "Grace Brewster",
-        alternateName: "Grace Brewster Murray Hopper",
-        alumniOf: {
-          "@type": "CollegeOrUniversity",
-          name: ["Yale University", "Vassar College"],
-        },
-        knowsAbout: ["Compilers", "Computer Science"],
-      }}
-    />
-    <SEO
-      title="Administración De Condominios"
-      description="A heavily optimized description full of well-researched keywords."
-      openGraph={{
-        basic: {
-          title: "A Very Descriptive Title",
-          type: "A type.",
-          image:
-            "https://user-images.githubusercontent.com/5182256/131216951-8f74f425-f775-463d-a11b-0e01ad9fce8d.png",
-        },
-      }}
-      twitter={{
-        creator: "@jonasmerlins1",
-      }}
-      extend={{
-        // extending the default link tags
-        link: [{ rel: "icon", href: "/favicon.ico" }],
-        // extending the default meta tags
-        meta: [
-          {
-            name: "twitter:image",
-            content:
-              "https://user-images.githubusercontent.com/5182256/131216951-8f74f425-f775-463d-a11b-0e01ad9fce8d.png",
-          },
-          { name: "twitter:title", content: "Tinker Tailor Soldier Spy" },
-          { name: "twitter:description", content: "Agent" },
-        ],
-      }}
-    />
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  seo={{
+    openGraph: {
+      basic: {
+        title: pageTitle,
+        type: "website",
+        image: "https://www.tuempresa.com/images/home-banner.jpg",
+        url: "https://www.tuempresa.com/",
+      },
+      optional: {
+        description: pageDescription,
+        siteName: "Nombre de la Empresa",
+        locale: "es_ES",
+      },
+    },
+    twitter: {
+      card: "summary_large_image",
+      site: "@tuempresa",
+      creator: "@tuempresa",
+      title: pageTitle,
+      description: pageDescription,
+      image: "https://www.tuempresa.com/images/home-banner.jpg",
+    },
+    schemaData: homePageSchema, // Cambiado de 'schema' a 'schemaData'
+  }}
+>
+  <!-- Contenido específico de la página principal -->
 
-    <meta name="generator" content={Astro.generator} />
-    <link rel="sitemap" href="/sitemap-index.xml" />
-    <script>
-      // Configuración inicial de tema
-      if (
-        localStorage.theme === "dark" ||
-        (!("theme" in localStorage) &&
-          window.matchMedia("(prefers-color-scheme: dark)").matches)
-      ) {
-        document.documentElement.classList.add("dark");
-      }
-    </script>
-  </head>
-  <body>
-    <Layout>
-      <HomeSlider client:only="react" />
-      <WSPBtn
-        companyName="Servadec"
-        welcomeMessage="Estamos para atenderte"
-        phoneNumber="+56973974224"
-      />
+  <body class="bg-gray-700">
+    <HomeSlider client:only="react" />
+    <WSPBtn
+      companyName="Servadec"
+      welcomeMessage="Estamos para atenderte"
+      phoneNumber="+56973974224"
+    />
 
-      <Faq />
-      <TestimonialSlider client:only="react" />
-      <DarkModeToggle />
-      <Footer />
-    </Layout>
+    <Faq />
+    <TestimonialSlider client:only="react" />
   </body>
-</html>
+</Layout>
