@@ -14,7 +14,10 @@ import { Navigation, Keyboard } from "swiper/modules";
 export default function HomeSlider() {
   return (
     <>
-      <div className="lg:mx-20 mx-5 items-center " data-aos="fade-in">
+      <div
+        className="lg:mx-20 mx-5 items-center bg-amber-100"
+        data-aos="fade-in"
+      >
         <Swiper
           slidesPerView="auto"
           navigation={true} // Changed Navigation to navigation

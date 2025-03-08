@@ -4,6 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css"; // Estilos base de Swiper
 import "swiper/css/pagination"; // Estilos para paginación
 import "swiper/css/navigation"; // Estilos para navegación
+//import "./styles.css";
 import { Pagination, Navigation } from "swiper/modules";
 
 export default function TestimonialSlider() {

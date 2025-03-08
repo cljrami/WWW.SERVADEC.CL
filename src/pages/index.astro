@@ -4,6 +4,8 @@ import Faq from "../components/Faq/Faq.astro";
 import HomeSlider from "../components/HomeSLider/HomeSlider.jsx";
 import TestimonialSlider from "../components/TestimonialSlider/TestimonialSlider.jsx";
 import WSPBtn from "../components/WSPBtn/WSPBtn.astro";
+import DarkModeToogle from "../components/DarkModeToggle/DarkModeToggle.astro";
+
 // Datos específicos de SEO para la página principal
 const pageTitle = "Inicio";
 const pageDescription =
@@ -71,7 +73,8 @@ const homePageSchema = {
 >
   <!-- Contenido específico de la página principal -->
 
-  <body class="bg-gray-700">
+  <body class="">
+    <DarkModeToogle />
     <HomeSlider client:only="react" />
     <WSPBtn
       companyName="Servadec"
