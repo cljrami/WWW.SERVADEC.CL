@@ -1,9 +1,12 @@
 ---
 import Footer from "../components/Footer/Footer.astro";
 import GlobalSeo from "../components/Seo/GlobalSeo.astro";
+import "@fontsource-variable/inter";
 import "../styles/global.css";
+
 import "animate.css";
 import "aos/dist/aos.css";
+import DarkModeToggle from "../components/DarkModeToggle/DarkModeToggle.astro";
 
 // import Header from "../components/Header.astro";
 
@@ -36,8 +39,10 @@ const { title, description, seo } = Astro.props;
       schemaData={seo?.schemaData}
     />
   </head>
-
-  <slot />
-  <Footer />
-  <script src="../js/aos"></script>
+  <body class="dark">
+    <DarkModeToggle />
+    <slot />
+    <Footer />
+    <script src="../js/aos"></script>
+  </body>
 </html>

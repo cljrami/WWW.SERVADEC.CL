@@ -1,116 +1,369 @@
 ---
 // Navbar.astro
-// Barra de navegación responsive con Tailwind CSS
+
+interface NavbarStyle {
+  background: string;
+  shadow: string;
+  textColor: string;
+  hoverColor: string;
+}
+
+interface TextSizes {
+  logo: string;
+  menuItems: string;
+  mobileMenuItems: string;
+  button: string;
+}
+
+interface FontWeights {
+  menuItems: string;
+  logo: string;
+  button: string;
+}
+
+interface Props {
+  // Default style configuration
+  defaultStyle?: NavbarStyle;
+  // Scrolled style configuration
+  scrolledStyle?: NavbarStyle;
+  // Text size configuration
+  textSizes?: TextSizes;
+  // Font weight configuration
+  fontWeights?: FontWeights;
+  // Scroll threshold for style change (in pixels)
+  scrollThreshold?: number;
+  // Scroll threshold for hiding navbar (in pixels)
+  hideThreshold?: number;
+  // Logo text
+  logoText?: string;
+  // WhatsApp number (without country code)
+  whatsAppNumber?: string;
+  // Logo image path (optional)
+  logoImg?: string;
+  // Menu items
+  menuItems?: Array<{
+    label: string;
+    href: string;
+    isExternal?: boolean;
+  }>;
+}
+
+// Default props
+const {
+  defaultStyle = {
+    background: "bg-white",
+    shadow: "shadow-lg",
+    textColor: "text-red-900",
+    hoverColor: "hover:text-purple-600",
+  },
+  scrolledStyle = {
+    background: "bg-yellow-400/10",
+    shadow: "shadow-md",
+    textColor: "text-black",
+    hoverColor: "hover:text-yellow-700",
+  },
+  textSizes = {
+    logo: "text-2xl",
+    menuItems: "text-lg",
+    mobileMenuItems: "text-base",
+    button: "text-base",
+  },
+  fontWeights = {
+    menuItems: "font-medium",
+    logo: "font-bold",
+    button: "font-medium",
+  },
+  scrollThreshold = 100,
+  hideThreshold = 200,
+  logoText = "CondoAdmin",
+  whatsAppNumber = "1234567890",
+  logoImg,
+  menuItems = [
+    { label: "Servicios", href: "#services" },
+    { label: "Funciones", href: "/funciones" },
+    { label: "Precios", href: "/precios" },
+    { label: "Nosotros", href: "/nosotros" },
+    { label: "Contacto", href: "/contacto" },
+  ],
+} = Astro.props;
+
+// Store the persistent classes for menu items to maintain consistent text sizes
+const menuItemClasses = `nav-link ${textSizes.menuItems} ${fontWeights.menuItems} transition-colors`;
+const mobileMenuItemClasses = `mobile-menu-link nav-link ${textSizes.mobileMenuItems} ${fontWeights.menuItems} transition-colors`;
+const buttonClasses = `whatsapp-button flex items-center px-4 py-2 rounded-lg ${fontWeights.button} ${textSizes.button} shadow-md bg-green-500 text-white`;
 ---
 
-<nav
-  class="sticky top-0 z-50 bg-white/20 backdrop-blur-lg backdrop-brightness-110 backdrop-saturate-150 border border-white/30 rounded-lg p-4 shadow-lg"
+<header
+  id="main-header"
+  class:list={[
+    "fixed w-full top-0 left-0 z-50 transition-all duration-300",
+    defaultStyle.background,
+    defaultStyle.shadow,
+  ]}
 >
-  <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between h-16 items-center">
+  <nav class="container mx-auto px-4 py-4">
+    <div class="flex items-center justify-between">
       <!-- Logo -->
-      <div class="flex-shrink-0">
-        <a
-          href="/"
-          class="text-xl font-bold hover:text-gray-600 transition-colors"
-        >
-          MiLogo
-        </a>
-      </div>
+      <a href="/" class="flex items-center space-x-2">
+        {logoImg ? <img src={logoImg} alt={logoText} class="h-8" /> : null}
+        <span class:list={[textSizes.logo, fontWeights.logo]}>{logoText}</span>
+      </a>
 
-      <!-- Enlaces de navegación (visible en desktop) -->
-      <div class="hidden md:flex space-x-6">
-        <a
-          href="#features"
-          class="text-gray-600 hover:text-gray-800 transition-colors"
+      <!-- Mobile menu button -->
+      <button
+        id="mobile-menu-button"
+        class="md:hidden text-2xl focus:outline-none cursor-pointer"
+        aria-label="Menú"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
         >
-          Características
-        </a>
-        <a
-          href="#pricing"
-          class="text-gray-600 hover:text-gray-800 transition-colors"
-        >
-          Precios
-        </a>
-        <a
-          href="#about"
-          class="text-gray-600 hover:text-gray-800 transition-colors"
-        >
-          Nosotros
-        </a>
-        <a
-          href="#contact"
-          class="text-gray-600 hover:text-gray-800 transition-colors"
-        >
-          Contacto
-        </a>
-      </div>
+          <path
+            id="menu-icon"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"></path>
+          <path
+            id="close-icon"
+            class="hidden"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
 
-      <!-- Botón de menú móvil (visible en mobile) -->
-      <div class="md:hidden flex items-center">
-        <button
-          id="menu-toggle"
-          class="text-gray-600 hover:text-gray-800 focus:outline-none focus:text-gray-800"
+      <!-- Desktop navigation and WhatsApp button -->
+      <div class="hidden md:flex items-center space-x-6">
+        {
+          menuItems.map((item) => (
+            <a
+              href={item.href}
+              class:list={[
+                menuItemClasses,
+                defaultStyle.textColor,
+                defaultStyle.hoverColor,
+              ]}
+              target={item.isExternal ? "_blank" : undefined}
+              rel={item.isExternal ? "noopener noreferrer" : undefined}
+              data-nav-text-class={textSizes.menuItems}
+              data-nav-weight-class={fontWeights.menuItems}
+            >
+              {item.label}
+            </a>
+          ))
+        }
+
+        <!-- WhatsApp button -->
+        <a
+          href={`https://wa.me/${whatsAppNumber}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class:list={[buttonClasses]}
         >
           <svg
+            class="w-5 h-5 mr-2"
+            fill="currentColor"
             xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6"
-            fill="none"
             viewBox="0 0 24 24"
-            stroke="currentColor"
           >
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 6h16M4 12h16m-7 6h7"></path>
+              d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
+            ></path>
           </svg>
-        </button>
+          WhatsApp
+        </a>
       </div>
     </div>
-  </div>
 
-  <!-- Menú desplegable móvil -->
-  <div id="mobile-menu" class="hidden md:hidden">
-    <div class="px-2 pt-2 pb-3 space-y-1">
-      <a
-        href="#features"
-        class="block text-gray-600 hover:text-gray-800 transition-colors"
-      >
-        Características
-      </a>
-      <a
-        href="#pricing"
-        class="block text-gray-600 hover:text-gray-800 transition-colors"
-      >
-        Precios
-      </a>
-      <a
-        href="#about"
-        class="block text-gray-600 hover:text-gray-800 transition-colors"
-      >
-        Nosotros
-      </a>
-      <a
-        href="#contact"
-        class="block text-gray-600 hover:text-gray-800 transition-colors"
-      >
-        Contacto
-      </a>
+    <!-- Mobile menu dropdown -->
+    <div
+      id="mobile-menu"
+      class="md:hidden overflow-hidden max-h-0 transition-all duration-300 ease-in-out"
+    >
+      <div class="flex flex-col space-y-4 pt-4 pb-6">
+        {
+          menuItems.map((item) => (
+            <a
+              href={item.href}
+              class:list={[
+                mobileMenuItemClasses,
+                defaultStyle.textColor,
+                defaultStyle.hoverColor,
+              ]}
+              target={item.isExternal ? "_blank" : undefined}
+              rel={item.isExternal ? "noopener noreferrer" : undefined}
+              data-nav-text-class={textSizes.mobileMenuItems}
+              data-nav-weight-class={fontWeights.menuItems}
+            >
+              {item.label}
+            </a>
+          ))
+        }
+        <!-- Mobile WhatsApp button -->
+        <a
+          href={`https://wa.me/${whatsAppNumber}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class:list={["mobile-menu-link justify-center", buttonClasses]}
+        >
+          <svg
+            class="w-5 h-5 mr-2"
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
+            ></path>
+          </svg>
+          WhatsApp
+        </a>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
+</header>
 
-<script>
-  // Script para manejar el menú móvil
-  const menuToggle = document.getElementById("menu-toggle");
-  const mobileMenu = document.getElementById("mobile-menu");
+<script
+  define:vars={{
+    defaultStyle,
+    scrolledStyle,
+    textSizes,
+    fontWeights,
+    scrollThreshold,
+    hideThreshold,
+  }}
+>
+  document.addEventListener("DOMContentLoaded", () => {
+    // DOM elements
+    const header = document.getElementById("main-header");
+    const mobileMenuButton = document.getElementById("mobile-menu-button");
+    const mobileMenu = document.getElementById("mobile-menu");
+    const menuIcon = document.getElementById("menu-icon");
+    const closeIcon = document.getElementById("close-icon");
+    const navLinks = document.querySelectorAll(".nav-link");
 
-  if (menuToggle && mobileMenu) {
-    menuToggle.addEventListener("click", () => {
-      mobileMenu.classList.toggle("hidden");
+    // State variables
+    let lastScrollPosition = 0;
+    let isMenuOpen = false;
+
+    // Exit early if any required elements are missing
+    if (
+      !header ||
+      !mobileMenuButton ||
+      !mobileMenu ||
+      !menuIcon ||
+      !closeIcon
+    ) {
+      console.error("One or more required elements not found in the DOM");
+      return;
+    }
+
+    /**
+     * Applies styles to navbar elements based on the current state
+     * while preserving text sizes and font weights
+     */
+    const applyStyles = (styles) => {
+      // Apply to header
+      header.className = `fixed w-full top-0 left-0 z-50 transition-all duration-300 ${styles.background} ${styles.shadow}`;
+
+      // Apply to navigation links while preserving text sizing and font weights
+      navLinks.forEach((link) => {
+        // Get data attributes containing the persistent text classes
+        const textClass =
+          link.getAttribute("data-nav-text-class") || textSizes.menuItems;
+        const weightClass =
+          link.getAttribute("data-nav-weight-class") || fontWeights.menuItems;
+
+        // Get the existing classes that don't involve text color, hover, font-weight or text-size
+        const baseClasses = link.className
+          .split(" ")
+          .filter(
+            (cls) =>
+              !cls.startsWith("text-") &&
+              !cls.startsWith("hover:") &&
+              !cls.startsWith("font-") &&
+              !/^text-[a-z0-9-]+$/.test(cls) // Skip text-size classes like text-base, text-lg, etc.
+          )
+          .join(" ");
+
+        // Set classes while ensuring text size and font weight are preserved
+        link.className = `${baseClasses} ${textClass} ${weightClass} ${styles.textColor} ${styles.hoverColor}`;
+      });
+    };
+
+    /**
+     * Toggles the mobile menu visibility
+     */
+    const toggleMobileMenu = () => {
+      isMenuOpen = !isMenuOpen;
+      if (isMenuOpen) {
+        mobileMenu.style.maxHeight = `${mobileMenu.scrollHeight}px`;
+        menuIcon.classList.add("hidden");
+        closeIcon.classList.remove("hidden");
+      } else {
+        mobileMenu.style.maxHeight = "0px";
+        menuIcon.classList.remove("hidden");
+        closeIcon.classList.add("hidden");
+      }
+    };
+
+    /**
+     * Closes the mobile menu
+     */
+    const closeMobileMenu = () => {
+      if (isMenuOpen) {
+        mobileMenu.style.maxHeight = "0px";
+        menuIcon.classList.remove("hidden");
+        closeIcon.classList.add("hidden");
+        isMenuOpen = false;
+      }
+    };
+
+    // Add event listeners
+    mobileMenuButton.addEventListener("click", toggleMobileMenu);
+
+    // Close menu when clicking on mobile menu links
+    document.querySelectorAll(".mobile-menu-link").forEach((link) => {
+      link.addEventListener("click", closeMobileMenu);
     });
-  } else {
-    console.error("Error: No se encontró el botón de menú o el menú móvil.");
-  }
+
+    // Handle scroll behavior
+    window.addEventListener("scroll", () => {
+      const currentScrollPosition = window.pageYOffset;
+
+      // Apply styles based on scroll position
+      if (currentScrollPosition > scrollThreshold) {
+        applyStyles(scrolledStyle);
+      } else {
+        applyStyles(defaultStyle);
+      }
+
+      // Auto-hide navbar when scrolling down, show when scrolling up
+      if (
+        currentScrollPosition > lastScrollPosition &&
+        currentScrollPosition > hideThreshold
+      ) {
+        // Scrolling down - hide navbar
+        header.style.transform = "translateY(-100%)";
+      } else {
+        // Scrolling up - show navbar
+        header.style.transform = "translateY(0)";
+      }
+
+      lastScrollPosition = currentScrollPosition;
+    });
+
+    // Close menu on window resize (when switching to desktop view)
+    window.addEventListener("resize", () => {
+      if (window.innerWidth >= 768 && isMenuOpen) {
+        closeMobileMenu();
+      }
+    });
+  });
 </script>

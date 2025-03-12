@@ -1,3 +1,30 @@
 @import "tailwindcss";
 @import '@fontsource/inter';
 
+body {
+    font-family: 'Inter Variable', sans-serif;
+  }
+  html {
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+   
+    
+}
+
+     /* Scrollbar Styles */
+    ::-webkit-scrollbar {
+      width:6px; /* Adjust the width as needed */
+      height:6px; /* Adjust the height as needed */
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(209, 30, 30, 0.5); /* Adjust the thumb color as needed */
+      border-radius: 3px;
+      
+      height: 6px; 
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(80, 1, 1, 0.7); /* Adjust the hover thumb color as needed */
+    }
