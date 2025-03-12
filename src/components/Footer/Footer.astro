@@ -1,49 +1,80 @@
-<div
-  class="w-full flex items-center justify-center bg-blue-900 pt-32"
-  id="services"
->
-  <div class="md:w-2/3 w-full px-4 text-white flex flex-col">
-    <div class="w-full text-7xl font-bold">
-      <h1
-        class="w-full md:w-2/3 text-4xl lg:text-6xl md:text-5xl text-white dark:text-blue-100"
-        data-aos="fade-in"
-      >
-        Administración y Auditorías de Condominios
-      </h1>
-    </div>
-    <div class="flex mt-8 flex-col md:flex-row md:justify-between">
-      <p class="w-full md:w-2/3 text-gray-400">
-        To ensure that all Wikipedia content is verifiable, anyone may question
-        an uncited claim. If your work has been tagged
-      </p>
-      <div class="w-44 pt-6 md:pt-0">
-        <a
-          class="bg-red-500 justify-center text-center rounded-lg shadow px-10 py-3 flex items-center"
-          >Contact US</a
-        >
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-300">
+  <div class="max-w-7xl mx-auto px-6 py-12">
+    <!-- Sección Principal -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <!-- Logo y Descripción -->
+      <div class="space-y-4">
+        <a href="/" class="flex items-center space-x-3">
+          <img
+            src="https://www.svgrepo.com/show/452102/slack.svg"
+            alt="Logo"
+            class="w-12"
+          />
+          <span class="text-xl font-semibold text-gray-900 dark:text-gray-100">
+            Servadec
+          </span>
+        </a>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          Realizar una revisión por un agente externo apoya a detectar falencias
+          o manejo inadecuado de los recursos en la actual administración
+        </p>
+      </div>
+
+      <!-- Enlaces Rápidos -->
+      <div>
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
+          Enlaces
+        </h3>
+        <ul class="mt-4 space-y-2">
+          <li><a href="#" class="hover:text-blue-500">Inicio</a></li>
+          <li><a href="#|" class="hover:text-blue-500">Acerca de</a></li>
+          <li><a href="#" class="hover:text-blue-500">Servicios</a></li>
+          <li><a href="#" class="hover:text-blue-500">Contacto</a></li>
+        </ul>
+      </div>
+
+      <!-- Servicios -->
+      <div>
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
+          Servicios
+        </h3>
+        <ul class="mt-4 space-y-2">
+          <li><a href="#" class="hover:text-blue-500">Auditorías</a></li>
+          <li>
+            <a href="#" class="hover:text-blue-500">Administración</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Contacto y Dirección -->
+      <div>
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
+          Contacto
+        </h3>
+        <ul class="mt-4 space-y-2">
+          <li class="flex items-center space-x-2">
+            <span>📧 Servadec</span>
+          </li>
+          <li class="flex items-center space-x-2">
+            <span>📞 +123 456 7890</span>
+          </li>
+          <li class="flex items-center space-x-2">
+            <span>📍 Av. Principal 123, Ciudad</span>
+          </li>
+        </ul>
       </div>
     </div>
-    <div class="flex flex-col">
-      <div class="flex mt-24 mb-12 flex-row justify-between">
-        <a
-          class="hidden md:block cursor-pointer text-gray-600 hover:text-white uppercase"
-          >About</a
-        >
-        <a
-          class="hidden md:block cursor-pointer text-gray-600 hover:text-white uppercase"
-          >Services</a
-        >
-        <a
-          class="hidden md:block cursor-pointer text-gray-600 hover:text-white uppercase"
-          >Why us</a
-        >
-        <a
-          class="hidden md:block cursor-pointer text-gray-600 hover:text-white uppercase"
-          >Contact</a
-        >
-      </div>
-      <hr class="border-white pt-5" />
-      <p class="w-full text-center pb-4">Copyright © 2020 Besnik Creative</p>
+
+    <!-- Línea Divisoria -->
+    <hr class="mt-8 border-gray-300 dark:border-gray-700" />
+
+    <!-- Copyright -->
+    <div class="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
+      &copy; {currentYear} Servadec - Todos los derechos reservados.
     </div>
   </div>
-</div>
+</footer>

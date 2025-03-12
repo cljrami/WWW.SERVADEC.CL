@@ -1,14 +1,14 @@
 ---
 import Footer from "../components/Footer/Footer.astro";
 import GlobalSeo from "../components/Seo/GlobalSeo.astro";
+
 import "@fontsource-variable/inter";
 import "../styles/global.css";
 
 import "animate.css";
 import "aos/dist/aos.css";
-import DarkModeToggle from "../components/DarkModeToggle/DarkModeToggle.astro";
 
-// import Header from "../components/Header.astro";
+import Navbar from "../components/Navbar/Navbar.astro";
 
 export interface Props {
   title?: string;
@@ -30,6 +30,11 @@ const { title, description, seo } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
     <GlobalSeo
       title={title}
       description={description}
@@ -39,8 +44,8 @@ const { title, description, seo } = Astro.props;
       schemaData={seo?.schemaData}
     />
   </head>
-  <body class="bg-white">
-    <DarkModeToggle />
+  <body>
+    <Navbar />
     <slot />
     <Footer />
     <script src="../js/aos"></script>
