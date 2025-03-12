@@ -1,0 +1,89 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Faq from "../components/Faq/Faq.astro";
+import HomeSlider from "../components/HomeSLider/HomeSlider.jsx";
+import TestimonialSlider from "../components/TestimonialSlider/TestimonialSlider.jsx";
+import WSPBtn from "../components/WSPBtn/WSPBtn.astro";
+import Hero from "../components/Hero/Hero.astro";
+import Navbar from "../components/Navbar/Navbar.astro";
+import DarkModeToogle from "../components/DarkModeToggle/DarkModeToggle.astro";
+// Datos específicos de SEO para la página principal
+const pageTitle = "Inicio";
+const pageDescription =
+  "Ofrecemos servicios profesionales de administración de condominios. Gestión eficiente, transparente y personalizada para comunidades residenciales en toda la región.";
+
+// Schema.org específico para la página principal
+const homePageSchema = {
+  "@type": "WebPage",
+  "@id": "https://www.tuempresa.com/#webpage",
+  url: "https://www.tuempresa.com/",
+  name: pageTitle,
+  description: pageDescription,
+  isPartOf: {
+    "@id": "https://www.tuempresa.com/#website",
+  },
+  about: {
+    "@type": "Service",
+    name: "Administración de Condominios",
+    description:
+      "Servicio profesional de administración de condominios y edificios residenciales",
+    provider: {
+      "@id": "https://www.tuempresa.com/#organization",
+    },
+    areaServed: {
+      "@type": "City",
+      name: "Nombre de tu Ciudad",
+    },
+  },
+  offers: {
+    "@type": "Offer",
+    description:
+      "Servicios de administración de condominios con planes personalizados",
+    url: "https://www.tuempresa.com/servicios/",
+  },
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  seo={{
+    openGraph: {
+      basic: {
+        title: pageTitle,
+        type: "website",
+        image: "https://www.tuempresa.com/images/home-banner.jpg",
+        url: "https://www.tuempresa.com/",
+      },
+      optional: {
+        description: pageDescription,
+        siteName: "Nombre de la Empresa",
+        locale: "es_ES",
+      },
+    },
+    twitter: {
+      card: "summary_large_image",
+      site: "@tuempresa",
+      creator: "@tuempresa",
+      title: pageTitle,
+      description: pageDescription,
+      image: "https://www.tuempresa.com/images/home-banner.jpg",
+    },
+    schemaData: homePageSchema, // Cambiado de 'schema' a 'schemaData'
+  }}
+>
+  <!-- Contenido específico de la página principal -->
+  <DarkModeToogle />
+  <Navbar />
+  <Hero />
+
+  <HomeSlider client:only="react" />
+  <WSPBtn
+    companyName="Servadec"
+    welcomeMessage="Estamos para atenderte"
+    phoneNumber="+56973974224"
+  />
+
+  <Faq />
+  <TestimonialSlider client:only="react" />
+</Layout>
