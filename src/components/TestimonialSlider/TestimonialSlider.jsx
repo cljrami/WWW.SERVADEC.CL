@@ -8,41 +8,72 @@ import { useRef } from "react";
 const testimonials = [
   {
     name: "María López",
-    username: "@marialopez",
+    empresa: "condominio empresa",
     image: "https://randomuser.me/api/portraits/women/1.jpg",
     feedback:
       "¡Increíble servicio! Nos ayudaron en todo el proceso y la auditoría fue muy clara.",
   },
   {
-    name: "Carlos Pérez",
-    username: "@carlosperez",
-    image: "https://randomuser.me/api/portraits/men/2.jpg",
+    name: "María López",
+    empresa: "condominio empresa",
+    image: "https://randomuser.me/api/portraits/women/1.jpg",
     feedback:
-      "La mejor experiencia que he tenido con una empresa de auditoría. Totalmente recomendado.",
+      "¡Increíble servicio! Nos ayudaron en todo el proceso y la auditoría fue muy clara.",
   },
   {
-    name: "Ana Fernández",
-    username: "@anafernandez",
-    image: "https://randomuser.me/api/portraits/women/3.jpg",
-    feedback: "Profesionales y eficientes. Me sentí muy segura con su equipo.",
+    name: "María López",
+    empresa: "condominio empresa",
+    image: "https://randomuser.me/api/portraits/women/1.jpg",
+    feedback:
+      "¡Increíble servicio! Nos ayudaron en todo el proceso y la auditoría fue muy clara.",
   },
   {
-    name: "Jorge Ramírez",
-    username: "@jorgeramirez",
-    image: "https://randomuser.me/api/portraits/men/4.jpg",
+    name: "María López",
+    empresa: "condominio empresa",
+    image: "https://randomuser.me/api/portraits/women/1.jpg",
     feedback:
-      "Muy buen trabajo. La transparencia y la comunicación fueron clave en el proceso.",
+      "¡Increíble servicio! Nos ayudaron en todo el proceso y la auditoría fue muy clara.",
   },
   {
-    name: "Lucía Gómez",
-    username: "@luciagomez",
-    image: "https://randomuser.me/api/portraits/women/5.jpg",
+    name: "María López",
+    empresa: "condominio empresa",
+    image: "https://randomuser.me/api/portraits/women/1.jpg",
     feedback:
-      "No podría estar más contenta con el servicio. Los recomendaría sin dudar.",
+      "¡Increíble servicio! Nos ayudaron en todo el proceso y la auditoría fue muy clara.",
+  },
+  {
+    name: "María López",
+    empresa: "condominio empresa",
+    image: "https://randomuser.me/api/portraits/women/1.jpg",
+    feedback:
+      "¡Increíble servicio! Nos ayudaron en todo el proceso y la auditoría fue muy clara.",
+  },
+  {
+    name: "María López",
+    empresa: "condominio empresa",
+    image: "https://randomuser.me/api/portraits/women/1.jpg",
+    feedback:
+      "¡Increíble servicio! Nos ayudaron en todo el proceso y la auditoría fue muy clara.",
+  },
+  {
+    name: "María López",
+    empresa: "condominio empresa",
+    image: "https://randomuser.me/api/portraits/women/1.jpg",
+    feedback:
+      "¡Increíble servicio! Nos ayudaron en todo el proceso y la auditoría fue muy clara.",
+  },
+  {
+    name: "María López",
+    empresa: "condominio empresa",
+    image: "https://randomuser.me/api/portraits/women/1.jpg",
+    feedback:
+      "¡Increíble servicio! Nos ayudaron en todo el proceso y la auditoría fue muy clara.",
   },
 ];
 
-export default function TestimonialSlider() {
+export default function TestimonialSlider({
+  imgSize = "w-20 h-20 rounded-full",
+}) {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
 
@@ -50,7 +81,7 @@ export default function TestimonialSlider() {
     <div
       data-aos="fade-up"
       data-aos-anchor-placement="top-bottom"
-      className="relative"
+      className="relative bg-gray-900"
     >
       {/* Encabezado + Flechas de Navegación */}
       <div className="flex flex-col items-center w-full p-6 mx-auto xl:px-0 relative">
@@ -83,10 +114,10 @@ export default function TestimonialSlider() {
       </div>
 
       {/* Contenedor del Swiper */}
-      <div className="relative w-full max-w-9xl mx-auto">
+      <div className="relative w-full max-w-9xl mx-auto ">
         <Swiper
           modules={[Navigation]}
-          spaceBetween={20}
+          spaceBetween={10}
           slidesPerView="auto"
           navigation={{ prevEl: prevRef.current, nextEl: nextRef.current }}
           onInit={(swiper) => {
@@ -99,23 +130,21 @@ export default function TestimonialSlider() {
         >
           {testimonials.map((testimonial, index) => (
             <SwiperSlide key={index} className="w-auto">
-              <div className="p-6 bg-white shadow-md rounded-lg transition-transform hover:shadow-lg hover:-translate-y-1 text-left max-w-sm">
-                <div className="flex items-start mb-4">
-                  <div className="flex-shrink-0 mr-4">
+              <div className=" shadow-md rounded-lg transition-transform hover:shadow-lg hover:-translate-y-1 text-left ">
+                <div class="mx-auto bg-white/80 rounded-xl p-6 shadow-2xl m-2 backdrop-blur-md  ">
+                  <p>{testimonial.feedback}</p>
+                  <div class="mt-5 flex items-center">
                     <img
-                      className="w-12 h-12 rounded-full"
                       src={testimonial.image}
+                      class={testimonial.imageClass || imgSize}
                       alt={testimonial.name}
                     />
-                  </div>
-                  <div>
-                    <h3 className="font-bold">{testimonial.name}</h3>
-                    <p className="text-sm text-gray-500">
-                      {testimonial.username}
-                    </p>
+                    <div class="ml-3">
+                      <h3 class="font-semibold">{testimonial.name} </h3>
+                      <p class="text-gray-500">{testimonial.empresa} </p>
+                    </div>
                   </div>
                 </div>
-                <p className="text-gray-700">"{testimonial.feedback}"</p>
               </div>
             </SwiperSlide>
           ))}

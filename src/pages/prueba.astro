@@ -5,8 +5,8 @@ import HomeSlider from "../components/HomeSLider/HomeSlider.jsx";
 import TestimonialSlider from "../components/TestimonialSlider/TestimonialSlider.jsx";
 import WSPBtn from "../components/WSPBtn/WSPBtn.astro";
 import Hero from "../components/Hero/Hero.astro";
-import Navbar from "../components/Navbar/Navbar.astro";
-import DarkModeToogle from "../components/DarkModeToggle/DarkModeToggle.astro";
+import Tablavalores from "../components/valores/TablaValores.astro";
+
 // Datos específicos de SEO para la página principal
 const pageTitle = "Inicio";
 const pageDescription =
@@ -73,8 +73,7 @@ const homePageSchema = {
   }}
 >
   <!-- Contenido específico de la página principal -->
-  <DarkModeToogle />
-  <Navbar />
+
   <Hero />
 
   <HomeSlider client:only="react" />
@@ -83,7 +82,7 @@ const homePageSchema = {
     welcomeMessage="Estamos para atenderte"
     phoneNumber="+56973974224"
   />
-
   <Faq />
   <TestimonialSlider client:only="react" />
+  <Tablavalores />
 </Layout>

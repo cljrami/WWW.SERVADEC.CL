@@ -53,11 +53,11 @@ const {
   defaultStyle = {
     background: "backdrop-blur-lg",
     shadow: "",
-    textColor: "text-black",
+    textColor: "text-white",
     hoverColor: "hover:text-purple-600",
   },
   scrolledStyle = {
-    background: " backdrop-blur-lg",
+    background: " backdrop-blur-lg bg-white/30",
     shadow: "shadow-md",
     textColor: "text-black",
     hoverColor: "hover:text-yellow-700",
@@ -70,12 +70,11 @@ const {
   },
   fontWeights = {
     menuItems: "",
-    logo: "font-bold",
     button: "",
   },
   scrollThreshold = 100,
   hideThreshold = 200,
-  logoText = "CondoAdmin",
+
   whatsAppNumber = "1234567890",
   logoImg,
   menuItems = [
@@ -103,9 +102,12 @@ const buttonClasses = `whatsapp-button flex items-center p-4  rounded-lg ${fontW
   <nav class="container mx-auto px-4 py-4" data-aos="zoom-in">
     <div class="flex items-center justify-between">
       <!-- Logo -->
-      <a href="/" class="flex items-center space-x-2">
-        {logoImg ? <img src={logoImg} alt={logoText} class="h-8" /> : null}
-        <span class:list={[textSizes.logo, fontWeights.logo]}>{logoText}</span>
+      <a href="/" class="flex items-center">
+        <img
+          src={logoImg || "/ruta-a-tu-logo.png"}
+          alt="Logo"
+          class="h-20 w-20"
+        />
       </a>
 
       <!-- Mobile menu button -->

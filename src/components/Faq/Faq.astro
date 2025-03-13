@@ -1,108 +1,116 @@
 ---
-interface FAQItem {
-  question: string;
-  answer: string;
-}
-
-interface Props {
-  title?: string;
-  items: FAQItem[];
-}
-
-const { title = "Preguntas Frecuentes", items = [] } = Astro.props;
+const accordionData = [
+  {
+    title: "¿Por qué hacer auditoría?",
+    content: `
+      <p>Realizar una revisión por un agente externo apoya a detectar <strong>falencias</strong> o manejo inadecuado de los recursos en la actual administración.</p>
+      <p>El estudio debe ayudar a tomar decisiones con <span class="text-indigo-400">cuentas transparentes</span> y alertar situaciones preventivas, garantizando salud financiera y operativa.</p>
+    `,
+  },
+  {
+    title: "¿Qué aspectos se revisan?",
+    content: `
+      <ul class="list-disc pl-5 space-y-2">
+        <li><strong>Financieros:</strong> Ingresos y egresos, conciliación bancaria, estado de morosidad.</li>
+        <li><strong>Laborales:</strong> Contratos, liquidaciones y leyes sociales.</li>
+        <li><strong>Contratos Externos:</strong> Cumplimiento de mantenimientos y pólizas de seguro.</li>
+        <li><strong>Reglamento de Copropiedad:</strong> Revisión y actualización según Ley 21.442.</li>
+      </ul>
+    `,
+  },
+  {
+    title: "Resumen del Servicio",
+    content: `
+      <p>Se realiza un estudio detallado según los cuatro puntos destacados, entregando un <span class="text-green-400">informe</span> con áreas de mejora para una administración responsable y sostenible.</p>
+    `,
+  },
+  {
+    title: "¿Qué requiere SERVADEC para realizar la auditoría?",
+    content: `
+      <p>Para realizar la auditoría, requerimos acceso a la siguiente información:</p>
+      <ul class="list-disc pl-5 space-y-2">
+        <li>Plataformas de gestión administrativa.</li>
+        <li>Acceso a Dirección del Trabajo, Previred y SII.</li>
+        <li>Información bancaria y contratos laborales.</li>
+        <li>Reglamentos del condominio y actas de asamblea.</li>
+      </ul>
+    `,
+  },
+];
 ---
 
-<div class="w-full max-w-2xl mx-auto py-8 px-4 dark:bg-amber-100">
-  {title && <h2 class="text-3xl font-bold text-center mb-8">{title}</h2>}
-
-  <div class="space-y-3" data-faq-accordion>
-    {
-      items.map((item, index) => (
+<div class="max-w-3xl mx-auto p-6 space-y-4">
+  {
+    accordionData.map((item, index) => (
+      <div class="accordion-item bg-white/10 rounded-xl p-2 shadow-2xl m-2 backdrop-blur-md  rounded-MD">
+        <button class="accordion-header w-full flex justify-between items-center p-4 text-left text-white font-semibold text-lg focus:outline-none">
+          {item.title}
+          <i class="fa-solid fa-chevron-down transition-transform duration-300" />
+        </button>
         <div
-          class="border rounded-md overflow-hidden transition-all duration-200 shadow-md"
-          data-faq-item
-        >
-          <button
-            class="w-full flex justify-between items-center p-4 bg-gray-100 hover:bg-gray-200 transition-all duration-200"
-            aria-expanded={index === 0 ? "true" : "false"}
-            data-faq-trigger
-          >
-            <span class="text-lg font-medium text-left">{item.question}</span>
-            <div
-              class={`faq-icon transform transition-transform duration-300 ${index === 0 ? "rotate-180" : ""}`}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
-            </div>
-          </button>
-          <div
-            class={`p-5 border-t bg-white transition-all duration-300 ${index === 0 ? "block" : "hidden"}`}
-            data-faq-content
-            set:html={item.answer}
-          />
-        </div>
-      ))
-    }
-  </div>
+          class="accordion-content px-4 pb-4 text-gray-300 hidden"
+          set:html={item.content}
+        />
+      </div>
+    ))
+  }
 </div>
 
 <script>
-  function setupFAQAccordion() {
-    const accordionContainers = document.querySelectorAll(
-      "[data-faq-accordion]"
-    );
+  document.addEventListener("DOMContentLoaded", () => {
+    const accordionItems = document.querySelectorAll(".accordion-item");
 
-    accordionContainers.forEach((container) => {
-      const items = container.querySelectorAll("[data-faq-item]");
+    accordionItems.forEach((item) => {
+      const header = item.querySelector(".accordion-header");
+      const content = item.querySelector(
+        ".accordion-content"
+      ) as HTMLElement | null;
+      const icon = header?.querySelector("i");
 
-      items.forEach((item) => {
-        const trigger = item.querySelector("[data-faq-trigger]");
-        const content = item.querySelector("[data-faq-content]");
-        const icon = item.querySelector(".faq-icon");
+      if (!header || !content || !icon) return;
 
-        if (!trigger || !content || !icon) return;
+      header.addEventListener("click", () => {
+        const isOpen = content.classList.contains("open");
 
-        trigger.addEventListener("click", () => {
-          const isExpanded = trigger.getAttribute("aria-expanded") === "true";
-
-          // Cerrar todos los demás
-          items.forEach((otherItem) => {
-            const otherTrigger = otherItem.querySelector("[data-faq-trigger]");
-            const otherContent = otherItem.querySelector("[data-faq-content]");
-            const otherIcon = otherItem.querySelector(".faq-icon");
-
-            if (otherTrigger && otherContent && otherIcon) {
-              otherTrigger.setAttribute("aria-expanded", "false");
-              otherContent.classList.add("hidden");
-              otherContent.classList.remove("block");
-              otherIcon.classList.remove("rotate-180");
-            }
-          });
-
-          // Si estaba cerrado, abrirlo
-          if (!isExpanded) {
-            trigger.setAttribute("aria-expanded", "true");
-            content.classList.remove("hidden");
-            content.classList.add("block");
-            icon.classList.add("rotate-180");
-          }
+        // Cerrar todos los acordeones
+        document.querySelectorAll(".accordion-content").forEach((c) => {
+          (c as HTMLElement).classList.remove("open");
+          (c as HTMLElement).classList.add("hidden");
+          (c as HTMLElement).style.maxHeight = "";
         });
+
+        document.querySelectorAll(".accordion-header i").forEach((i) => {
+          i.classList.remove("rotate-180");
+        });
+
+        // Si estaba cerrado, abrirlo
+        if (!isOpen) {
+          content.classList.add("open");
+          content.classList.remove("hidden");
+          content.style.maxHeight = content.scrollHeight + "px";
+          icon.classList.add("rotate-180");
+        }
       });
     });
+  });
+</script>
+
+<style>
+  .accordion-content {
+    overflow: hidden;
+    transition:
+      max-height 0.3s ease-out,
+      opacity 0.3s ease-out;
+    max-height: 0;
+    opacity: 0;
   }
 
-  document.addEventListener("astro:after-swap", setupFAQAccordion);
-  document.addEventListener("DOMContentLoaded", setupFAQAccordion);
-</script>
+  .accordion-content.open {
+    opacity: 1;
+    max-height: 1000px; /* Un valor alto para permitir la expansión */
+  }
+
+  .rotate-180 {
+    transform: rotate(180deg);
+  }
+</style>

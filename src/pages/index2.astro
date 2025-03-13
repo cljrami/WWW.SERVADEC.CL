@@ -1,27 +1,11 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Faq from "../components/Faq/Faq.astro";
-const faqItems = [
-  {
-    question: "¿Qué es Astro?",
-    answer:
-      "Astro es un framework web moderno que<br/>permite crear sitios web rápidos y orientados al contenido. Combina características de frameworks populares pero envía menos JavaScript al navegador.",
-  },
-  {
-    question: "¿Por qué usar Tailwind con Astro?",
-    answer:
-      "Tailwind CSS se integra perfectamente con Astro, proporcionando un sistema de utilidades CSS que facilita el diseño sin necesidad de escribir CSS personalizado. Esto acelera el desarrollo y mantiene los estilos consistentes.",
-  },
-  {
-    question: "¿Cómo se integra la interactividad en Astro?",
-    answer:
-      "Astro permite añadir interactividad mediante 'Astro Islands' o islas de Astro. Puedes utilizar componentes de frameworks como React, Vue, Svelte, etc., donde se necesite interactividad, manteniendo el resto del sitio como HTML estático para un rendimiento óptimo.",
-  },
-];
 import HomeSlider from "../components/HomeSLider/HomeSlider.jsx";
 import TestimonialSlider from "../components/TestimonialSlider/TestimonialSlider.jsx";
 import WSPBtn from "../components/WSPBtn/WSPBtn.astro";
 import Hero from "../components/Hero/Hero.astro";
+import Tablavalores from "../components/valores/TablaValores.astro";
 
 // Datos específicos de SEO para la página principal
 const pageTitle = "Inicio";
@@ -98,6 +82,7 @@ const homePageSchema = {
     welcomeMessage="Estamos para atenderte"
     phoneNumber="+56973974224"
   />
-  <Faq title="Preguntas más comunes" items={faqItems} />
+  <Faq />
   <TestimonialSlider client:only="react" />
+  <Tablavalores />
 </Layout>
