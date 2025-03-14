@@ -96,13 +96,13 @@ export default function TestimonialSlider({
         <div className="absolute top-32  right-4 flex space-x-3 -mt-30 z-10 py-20 hidden sm:flex ">
           <button
             ref={prevRef}
-            className="w-10 h-10 flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 text-white  shadow-lg transition-all"
+            className="w-12 h-12 flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 text-white  shadow-lg transition-all"
           >
             ❮
           </button>
           <button
             ref={nextRef}
-            className="w-10 h-10 flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 text-white shadow-lg transition-all"
+            className="w-12 h-12 flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 text-white shadow-lg transition-all"
           >
             ❯
           </button>
