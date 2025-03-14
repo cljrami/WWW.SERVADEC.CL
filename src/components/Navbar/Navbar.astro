@@ -79,6 +79,9 @@ const {
   logoImg,
   menuItems = [
     { label: "Inicio", href: "Inicio" },
+    { label: "Preguntas Frecuentes", href: "#preguntas-frecuentes" },
+    { label: "Servicios", href: "Servicios" },
+
     { label: "Auditorias", href: "Auditorias" },
     { label: "Administración", href: "Administración" },
     { label: "Contacto", href: "/contacto" },
@@ -99,7 +102,7 @@ const buttonClasses = `whatsapp-button flex items-center p-4  rounded-lg ${fontW
     defaultStyle.shadow,
   ]}
 >
-  <nav class="container mx-auto px-4 py-4" data-aos="zoom-in">
+  <nav class="container mx-auto px-4 py-4">
     <div class="flex items-center justify-between">
       <!-- Logo -->
       <a href="/" class="flex items-center">
@@ -113,7 +116,7 @@ const buttonClasses = `whatsapp-button flex items-center p-4  rounded-lg ${fontW
       <!-- Mobile menu button -->
       <button
         id="mobile-menu-button"
-        class="md:hidden text-2xl focus:outline-none cursor-pointer"
+        class="md:hidden text-2xl focus:outline-none cursor-pointer text-white"
         aria-label="Menú"
       >
         <svg

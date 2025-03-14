@@ -1,70 +1,139 @@
-<div class="bg-gray-900 px-4 py-16">
-  <div
-    aria-hidden="true"
-    class="absolute inset-0 h-max w-full m-auto grid grid-cols-2 -space-x-52 opacity-20"
-  >
-    <div
-      class="blur-[106px] h-56 bg-gradient-to-br to-purple-400 from-blue-700"
-    >
-    </div>
-    <div class="blur-[106px] h-32 bg-gradient-to-r from-cyan-400 to-indigo-600">
-    </div>
-  </div>
-  <div class="max-w-7xl mx-auto px-6 md:px-12 xl:px-6">
-    <div class="mb-10 space-y-4 px-6 md:px-0">
+---
+import WhatsappBtn from "../WhatsApp/WhatsappBtn.astro";
+---
+
+<section class="py-24" data-aos="fade-up">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="mb-12 text-center">
       <h2
-        class="text-center text-2xl font-bold text-white sm:text-3xl md:text-4xl"
+        class="font-manrope text-5xl text-center font-bold text-gray-900 mb-4"
       >
         Planes
       </h2>
-    </div>
-    <div class="flex flex-col sm:flex-row justify-center gap-4">
-      <div
-        class="flex flex-col items-center aspect-auto p-4 sm:p-8 border rounded-3xl bg-gray-800 border-gray-700 shadow-gray-600/10 shadow-none m-2 flex-1 max-w-md"
-      >
-        <h2 class="text-lg sm:text-xl font-medium text-white mb-2">Inicial</h2>
-        <p class="text-lg sm:text-xl text-center mb-8 mt-4 text-gray-400">
-          <span class="text-3xl sm:text-4xl font-bold text-white">Mensual</span>
-        </p>
-        <ul class="list-none list-inside mb-6 text-center text-gray-300">
-          <li class="font-bold text-orange-600">Auditoria</li>
-          <li>Contabilidad</li>
-          <li>Mantenimiento</li>
-          <li>Soporte</li>
-        </ul>
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          class="lemonsqueezy-button relative flex h-9 w-full items-center justify-center px-4 before:absolute before:inset-0 before:rounded-full before:bg-white before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max"
-          href="https://example.com/starter-plan"
-          ><span class="relative text-sm font-semibold text-black"
-            >Solicitar</span
-          ></a
+      <p class="text-gray-500 text-xl text-center leading-6 mb-12">
+        Planes de Auditorias y Administracíon.
+      </p>
+
+      <!--Switch-->
+      <div class="tabs">
+        <div
+          id="tabs-with-background-1"
+          role="tabpanel"
+          aria-labelledby="tabs-with-background-item-1"
+          class="tabcontent mt-12"
+          style=""
         >
-      </div>
-      <div
-        class="flex flex-col items-center aspect-auto p-4 sm:p-8 border rounded-3xl bg-gray-800 border-gray-700 shadow-gray-600/10 shadow-none m-2 flex-1 max-w-md"
-      >
-        <h2 class="text-lg sm:text-xl font-medium text-white mb-2">Inicial</h2>
-        <p class="text-lg sm:text-xl text-center mb-8 mt-4 text-gray-400">
-          <span class="text-3xl sm:text-4xl font-bold text-white">Mensual</span>
-        </p>
-        <ul class="list-none list-inside mb-6 text-center text-gray-300">
-          <li class="font-bold text-orange-600">Auditoria</li>
-          <li>Contabilidad</li>
-          <li>Mantenimiento</li>
-          <li>Soporte</li>
-        </ul>
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          class="lemonsqueezy-button relative flex h-9 w-full items-center justify-center px-4 before:absolute before:inset-0 before:rounded-full before:bg-white before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max"
-          href="https://example.com/starter-plan"
-          ><span class="relative text-sm font-semibold text-black"
-            >Solicitar</span
-          ></a
+          <div class="lg:grid lg:grid-cols-2 sm:gap-6 xl:gap-2">
+            <!--Pricing Card-->
+            <div
+              class="group relative flex flex-col mx-auto w-full text-gray-900 rounded-2xl border border-solid border-gray-300 text-center transition-all duration-300 p-6 xl:p-12 hover:border-indigo-600"
+            >
+              <h3 class="font-manrope text-2xl font-bold mb-6">
+                Administración Condominios
+              </h3>
+              <div class="mb-20 flex flex-col">
+                <span class="font-manrope text-6xl font-semibold mb-2"
+                  >Mensual</span
+                >
+                <span class="text-xl text-gray-400">Garantía</span>
+              </div>
+
+              <WhatsappBtn phone="1234567890" />
+
+              <!--List End-->
+            </div>
+            <div
+              class="group relative flex flex-col mx-auto w-full text-gray-900 rounded-2xl border border-solid border-gray-300 text-center transition-all duration-300 p-8 xl:p-12 hover:border-indigo-600"
+            >
+              <h3 class="font-manrope text-2xl font-bold mb-6">
+                Auditorías Condominios
+              </h3>
+              <div class="mb-20 flex flex-col">
+                <span class="font-manrope text-6xl font-semibold mb-2"
+                  >Mensual</span
+                >
+                <span class="text-xl text-gray-400">Garantía</span>
+              </div>
+              <WhatsappBtn phone="1234567890" />
+              <!--List End-->
+            </div>
+          </div>
+        </div>
+        <div
+          id="tabs-with-background-2"
+          class="tabcontent mt-12"
+          role="tabpanel"
+          aria-labelledby="tabs-with-background-item-2"
+          style="display: none"
         >
+          <div
+            class="space-y-8 lg:grid lg:grid-cols-3 sm:gap-6 xl:gap-8 lg:space-y-0"
+          >
+            <!--Pricing Card-->
+            <div
+              class="group relative flex flex-col mx-auto w-full max-w-sm text-gray-900 rounded-2xl border border-solid border-gray-300 text-center transition-all duration-300 p-6 xl:p-12 hover:border-indigo-600"
+            >
+              <h3 class="font-manrope text-2xl font-bold mb-6">Free</h3>
+              <div class="mb-20 flex flex-col">
+                <span class="font-manrope text-6xl font-semibold mb-2">$0</span>
+                <span class="text-xl text-gray-400">Lifetime</span>
+              </div>
+              <a
+                href="javascript:;"
+                class="py-2.5 px-5 bg-indigo-50 shadow-sm rounded-full transition-all duration-500 text-base text-indigo-600 font-semibold text-center w-fit mx-auto group-hover:bg-indigo-600 group-hover:text-white"
+                >Purchase Plan</a
+              >
+              <!--List End-->
+            </div>
+            <!--Pricing Card-->
+            <div
+              class="group relative flex flex-col mx-auto w-full max-w-sm text-gray-900 rounded-2xl border border-solid border-gray-300 text-center transition-all duration-500 p-6 xl:p-12 bg-gradient-to-r from-indigo-600 to-violet-600 hover:before:opacity-100 before:contents[' '] before:absolute before:bg-indigo-800 before:w-full before:h-full before:top-0 before:left-0 before:rounded-2xl before:opacity-0 before:transition-all before:duration-500 before:z-0"
+            >
+              <h3
+                class="relative flex items-center justify-center font-manrope text-2xl font-bold mb-6 text-white"
+              >
+                Advanced
+                <span
+                  class="h-6 px-3 relative rounded-full border border-solid border-gray-100 text-sm ml-4"
+                  >Popular</span
+                >
+              </h3>
+              <div class="mb-20 flex flex-col relative">
+                <span
+                  class="font-manrope text-6xl font-semibold mb-2 text-white"
+                  >$39</span
+                >
+                <span class="text-xl text-gray-300">Per Month</span>
+              </div>
+              <a
+                href="javascript:;"
+                class="relative py-2.5 px-5 bg-white shadow-sm rounded-full transition-all duration-500 text-base text-indigo-600 font-semibold text-center w-fit mx-auto"
+                >Purchase Plan</a
+              >
+              <!--List End-->
+            </div>
+            <!--Pricing Card-->
+            <div
+              class="group relative flex flex-col mx-auto w-full max-w-sm text-gray-900 rounded-2xl border border-solid border-gray-300 text-center transition-all duration-300 p-8 xl:p-12 hover:border-indigo-600"
+            >
+              <h3 class="font-manrope text-2xl font-bold mb-6">Team</h3>
+              <div class="mb-20 flex flex-col">
+                <span class="font-manrope text-6xl font-semibold mb-2">$49</span
+                >
+                <span class="text-xl text-gray-400">Per Month</span>
+              </div>
+              <a
+                href="javascript:;"
+                class="py-2.5 px-5 bg-indigo-50 shadow-sm rounded-full transition-all duration-500 text-base text-indigo-600 font-semibold text-center w-fit mx-auto group-hover:bg-indigo-600 group-hover:text-white"
+                >Purchase Plan</a
+              >
+              <!--List End-->
+            </div>
+          </div>
+        </div>
       </div>
+
+      <!--Switch End-->
     </div>
   </div>
-</div>
+</section>

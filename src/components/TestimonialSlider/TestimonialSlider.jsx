@@ -81,32 +81,28 @@ export default function TestimonialSlider({
     <div
       data-aos="fade-up"
       data-aos-anchor-placement="top-bottom"
-      className="relative bg-gray-900"
+      className="relative pt-30 "
     >
       {/* Encabezado + Flechas de Navegación */}
-      <div className="flex flex-col items-center w-full p-6 mx-auto xl:px-0 relative">
-        <div className="text-sm font-bold tracking-wider text-indigo-500 uppercase">
-          Testimonios
-        </div>
-        <h2 className="max-w-2xl mt-3 text-3xl font-bold leading-snug tracking-tight text-gray-800 lg:leading-tight lg:text-4xl">
-          Opiniones de Clientes
+      <div className="flex flex-col items-center w-full  mx-auto xl:px-0 relative">
+        <h2 class="font-manrope text-5xl text-center font-bold text-gray-900 mb-4">
+          Clientes Felices
         </h2>
-        <p className="max-w-2xl py-4 text-lg leading-normal text-gray-500 lg:text-xl xl:text-xl dark:text-gray-300">
-          Información verídica entregada por nuestros clientes en Condominios
-          Auditados.
+        <p class="text-gray-500 text-xl text-center leading-6 ">
+          Nuestros Clientes nos Avalan.
         </p>
 
         {/* Flechas de navegación alineadas con el título */}
-        <div className="absolute top-40 right-6 flex space-x-3 mt-1 z-10">
+        <div className="absolute top-32  right-4 flex space-x-3 -mt-30 z-10 py-20">
           <button
             ref={prevRef}
-            className="w-10 h-10 flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 text-white rounded-full shadow-lg transition-all"
+            className="w-10 h-10 flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 text-white  shadow-lg transition-all"
           >
             ❮
           </button>
           <button
             ref={nextRef}
-            className="w-10 h-10 flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 text-white rounded-full shadow-lg transition-all"
+            className="w-10 h-10 flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 text-white shadow-lg transition-all"
           >
             ❯
           </button>
@@ -126,12 +122,12 @@ export default function TestimonialSlider({
             swiper.navigation.init();
             swiper.navigation.update();
           }}
-          className="max-w-[100%] py-10"
+          className="max-w-[90%] py-10"
         >
           {testimonials.map((testimonial, index) => (
             <SwiperSlide key={index} className="w-auto">
-              <div className=" shadow-md rounded-lg transition-transform hover:shadow-lg hover:-translate-y-1 text-left ">
-                <div class="mx-auto bg-white/80 rounded-xl p-6 shadow-2xl m-2 backdrop-blur-md  ">
+              <div className=" shadow-sm rounded-lg transition-transform hover:shadow-lg hover:-translate-y-1 text-left ">
+                <div class="mx-auto  rounded-xl p-6 m-2   ">
                   <p>{testimonial.feedback}</p>
                   <div class="mt-5 flex items-center">
                     <img

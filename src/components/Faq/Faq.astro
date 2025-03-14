@@ -39,16 +39,29 @@ const accordionData = [
 ];
 ---
 
-<div class="max-w-3xl mx-auto p-6 space-y-4">
+<div
+  class="max-w-3xl mx-auto pt-30"
+  data-aos="fade-up"
+  data-aos-anchor-placement="top-bottom"
+  id="preguntas-frecuentes"
+>
+  <h2
+    class="font-manrope lg:text-5xl text-3xl text-center font-bold text-gray-900 mb-4"
+  >
+    Preguntas Frecuentes
+  </h2>
+  <p class="text-gray-500 text-xl text-center leading-6">
+    Respondemos a tus Dudas.
+  </p>
   {
     accordionData.map((item, index) => (
-      <div class="accordion-item bg-white/10 rounded-xl p-2 shadow-2xl m-2 backdrop-blur-md  rounded-MD">
-        <button class="accordion-header w-full flex justify-between items-center p-4 text-left text-white font-semibold text-lg focus:outline-none">
+      <div class="accordion-item rounded-xl p-2 shadow-sm m-2   rounded-MD">
+        <button class="accordion-header w-full flex justify-between items-center p-4 text-left font-semibold text-lg focus:outline-none">
           {item.title}
           <i class="fa-solid fa-chevron-down transition-transform duration-300" />
         </button>
         <div
-          class="accordion-content px-4 pb-4 text-gray-300 hidden"
+          class="accordion-content px-4 pb-4 text-black hidden"
           set:html={item.content}
         />
       </div>
