@@ -4,7 +4,7 @@ import Faq from "../components/Faq/Faq.astro";
 import HomeSlider from "../components/HomeSLider/HomeSlider.jsx";
 import TestimonialSlider from "../components/TestimonialSlider/TestimonialSlider.jsx";
 import WSPBtn from "../components/WSPBtn/WSPBtn.astro";
-import Hero from "../components/Hero/Hero.astro";
+import Hero from "../components/Hero/Hero.jsx";
 import Tablavalores from "../components/valores/TablaValores.astro";
 
 // Datos específicos de SEO para la página principal
@@ -74,7 +74,7 @@ const homePageSchema = {
 >
   <!-- Contenido específico de la página principal -->
 
-  <Hero />
+  <Hero client:only="react" />
 
   <HomeSlider client:only="react" />
   <WSPBtn
