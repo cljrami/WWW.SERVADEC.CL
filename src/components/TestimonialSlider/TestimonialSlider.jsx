@@ -2,150 +2,133 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 
 // Datos personalizados para los testimonios
 const testimonials = [
   {
     name: "María López",
-    empresa: "condominio empresa",
+    empresa: "Condominio Empresa",
     image: "https://randomuser.me/api/portraits/women/1.jpg",
     feedback:
       "¡Increíble servicio! Nos ayudaron en todo el proceso y la auditoría fue muy clara.",
   },
   {
-    name: "María López",
-    empresa: "condominio empresa",
-    image: "https://randomuser.me/api/portraits/women/1.jpg",
-    feedback:
-      "¡Increíble servicio! Nos ayudaron en todo el proceso y la auditoría fue muy clara.",
+    name: "Carlos Pérez",
+    empresa: "Edificio Central",
+    image: "https://randomuser.me/api/portraits/men/2.jpg",
+    feedback: "La gestión ha sido impecable, siempre atentos a cada detalle.",
   },
   {
-    name: "María López",
-    empresa: "condominio empresa",
-    image: "https://randomuser.me/api/portraits/women/1.jpg",
-    feedback:
-      "¡Increíble servicio! Nos ayudaron en todo el proceso y la auditoría fue muy clara.",
+    name: "Andrea Torres",
+    empresa: "Residencial Los Álamos",
+    image: "https://randomuser.me/api/portraits/women/3.jpg",
+    feedback: "Excelente experiencia, muy profesionales y confiables.",
   },
   {
-    name: "María López",
-    empresa: "condominio empresa",
-    image: "https://randomuser.me/api/portraits/women/1.jpg",
+    name: "Javier Gómez",
+    empresa: "Conjunto Cerrado San Luis",
+    image: "https://randomuser.me/api/portraits/men/4.jpg",
     feedback:
-      "¡Increíble servicio! Nos ayudaron en todo el proceso y la auditoría fue muy clara.",
-  },
-  {
-    name: "María López",
-    empresa: "condominio empresa",
-    image: "https://randomuser.me/api/portraits/women/1.jpg",
-    feedback:
-      "¡Increíble servicio! Nos ayudaron en todo el proceso y la auditoría fue muy clara.",
-  },
-  {
-    name: "María López",
-    empresa: "condominio empresa",
-    image: "https://randomuser.me/api/portraits/women/1.jpg",
-    feedback:
-      "¡Increíble servicio! Nos ayudaron en todo el proceso y la auditoría fue muy clara.",
-  },
-  {
-    name: "María López",
-    empresa: "condominio empresa",
-    image: "https://randomuser.me/api/portraits/women/1.jpg",
-    feedback:
-      "¡Increíble servicio! Nos ayudaron en todo el proceso y la auditoría fue muy clara.",
-  },
-  {
-    name: "María López",
-    empresa: "condominio empresa",
-    image: "https://randomuser.me/api/portraits/women/1.jpg",
-    feedback:
-      "¡Increíble servicio! Nos ayudaron en todo el proceso y la auditoría fue muy clara.",
-  },
-  {
-    name: "María López",
-    empresa: "condominio empresa",
-    image: "https://randomuser.me/api/portraits/women/1.jpg",
-    feedback:
-      "¡Increíble servicio! Nos ayudaron en todo el proceso y la auditoría fue muy clara.",
+      "Recomiendo totalmente sus servicios, han hecho una gran diferencia.",
   },
 ];
 
 export default function TestimonialSlider({
-  imgSize = "w-20 h-20 rounded-full",
+  imgSize = "w-16 h-16 rounded-full border-4 border-indigo-500",
 }) {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
+  const [swiperInstance, setSwiperInstance] = useState(null);
+
+  useEffect(() => {
+    if (swiperInstance && prevRef.current && nextRef.current) {
+      swiperInstance.params.navigation.prevEl = prevRef.current;
+      swiperInstance.params.navigation.nextEl = nextRef.current;
+      swiperInstance.navigation.init();
+      swiperInstance.navigation.update();
+    }
+  }, [swiperInstance]);
 
   return (
-    <div
+    <section
       data-aos="fade-up"
-      data-aos-anchor-placement="top-bottom"
-      className="relative pt-30 "
+      className="relative py-20 bg-gradient-to-r from-gray-100 to-gray-50 dark:from-gray-900 dark:to-gray-800"
     >
-      {/* Encabezado + Flechas de Navegación */}
-      <div className="flex flex-col items-center w-full  mx-auto xl:px-0 relative">
-        <h2 class="font-manrope text-5xl text-center font-bold text-gray-900 mb-4">
+      <div className="max-w-5xl mx-auto text-center">
+        <h2 className="text-4xl font-bold text-gray-900 dark:text-white">
           Clientes Felices
         </h2>
-        <p class="text-gray-500 text-xl text-center leading-6 ">
-          Nuestros Clientes nos Avalan.
+        <p className="text-lg text-gray-600 dark:text-gray-300 mt-2">
+          Nuestros clientes nos avalan con su confianza.
         </p>
-
-        {/* Flechas de navegación alineadas con el título */}
-        <div className="absolute top-32  right-4 flex space-x-3 -mt-30 z-10 py-20 hidden sm:flex ">
-          <button
-            ref={prevRef}
-            className="w-12 h-12 flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 text-white  shadow-lg transition-all"
-          >
-            ❮
-          </button>
-          <button
-            ref={nextRef}
-            className="w-12 h-12 flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 text-white shadow-lg transition-all"
-          >
-            ❯
-          </button>
-        </div>
       </div>
 
-      {/* Contenedor del Swiper */}
-      <div className="relative w-full max-w-9xl mx-auto ">
+      {/* Contenedor del Swiper con flechas de navegación */}
+      <div className="relative max-w-6xl mx-auto mt-10">
+        {/* Flecha izquierda */}
+        <button
+          ref={prevRef}
+          className="absolute top-1/2 -translate-y-1/2 left-0 w-12 h-12 flex items-center justify-center bg-indigo-500 hover:bg-indigo-700 text-white rounded-full shadow-lg transition-all z-10"
+        >
+          ❮
+        </button>
+
         <Swiper
           modules={[Navigation]}
           spaceBetween={10}
-          slidesPerView="auto"
-          navigation={{ prevEl: prevRef.current, nextEl: nextRef.current }}
-          onInit={(swiper) => {
-            swiper.params.navigation.prevEl = prevRef.current;
-            swiper.params.navigation.nextEl = nextRef.current;
-            swiper.navigation.init();
-            swiper.navigation.update();
+          slidesPerView={1}
+          breakpoints={{
+            640: { slidesPerView: 1 },
+            768: { slidesPerView: 2 },
+            1024: { slidesPerView: 2 },
           }}
-          className="max-w-[90%] py-10"
+          navigation={{ prevEl: prevRef.current, nextEl: nextRef.current }}
+          onSwiper={(swiper) => setSwiperInstance(swiper)}
+          className="py-10"
         >
           {testimonials.map((testimonial, index) => (
-            <SwiperSlide key={index} className="w-auto">
-              <div className=" shadow-sm rounded-lg transition-transform hover:shadow-lg hover:-translate-y-1 text-left ">
-                <div class="mx-auto  rounded-xl p-6 m-2   ">
-                  <p>{testimonial.feedback}</p>
-                  <div class="mt-5 flex items-center">
-                    <img
-                      src={testimonial.image}
-                      class={testimonial.imageClass || imgSize}
-                      alt={testimonial.name}
-                    />
-                    <div class="ml-3">
-                      <h3 class="font-semibold">{testimonial.name} </h3>
-                      <p class="text-gray-500">{testimonial.empresa} </p>
-                    </div>
+            <SwiperSlide key={index} className="flex justify-center">
+              <div className="relative bg-white dark:bg-gray-800 shadow-xl rounded-2xl p-6 text-left transition-transform duration-300 hover:shadow-2xl hover:-translate-y-2 border border-gray-200 dark:border-gray-700">
+                {/* Comillas decorativas */}
+                <span className="absolute top-4 left-4 text-5xl text-indigo-500 dark:text-indigo-400 opacity-20">
+                  ❝
+                </span>
+
+                {/* Testimonio */}
+                <p className="text-lg text-gray-700 dark:text-gray-300 italic leading-relaxed">
+                  "{testimonial.feedback}"
+                </p>
+
+                {/* Perfil del usuario */}
+                <div className="mt-6 flex items-center space-x-4">
+                  <img
+                    src={testimonial.image}
+                    className={testimonial.imageClass || imgSize}
+                    alt={testimonial.name}
+                  />
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                      {testimonial.name}
+                    </h3>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      {testimonial.empresa}
+                    </p>
                   </div>
                 </div>
               </div>
             </SwiperSlide>
           ))}
         </Swiper>
+
+        {/* Flecha derecha */}
+        <button
+          ref={nextRef}
+          className="absolute top-1/2 -translate-y-1/2 right-0 w-12 h-12 flex items-center justify-center bg-indigo-500 hover:bg-indigo-700 text-white rounded-full shadow-lg transition-all z-10"
+        >
+          ❯
+        </button>
       </div>
-    </div>
+    </section>
   );
 }

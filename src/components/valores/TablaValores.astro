@@ -1,131 +1,90 @@
 ---
 import WhatsappBtn from "../WhatsApp/WhatsappBtn.astro";
+
+const plans = [
+  {
+    name: "Administración",
+    description: "Ideal para gestionar y optimizar recursos con eficiencia.",
+    features: [
+      "Gestión de usuarios",
+      "Monitoreo en tiempo real",
+      "Automatización de tareas",
+      "Reportes detallados",
+      "Seguridad avanzada",
+    ],
+    popular: true, // Destaca esta tarjeta
+  },
+  {
+    name: "Auditorías Condominios",
+    description: "Análisis detallado y auditorías profesionales.",
+    features: [
+      "Evaluación financiera",
+      "Revisión de contratos",
+      "Detección de anomalías",
+      "Optimización de recursos",
+      "Asesoramiento experto",
+    ],
+    popular: false,
+  },
+];
 ---
 
-<section class="py-24" data-aos="fade-up">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="text-center">
-      <h2 class="font-manrope text-5xl text-center font-bold text-gray-900">
-        Planes
+<section class="py-20 bg-gray-100 dark:bg-gray-900">
+  <div class="max-w-6xl mx-auto px-6 lg:px-8">
+    <div class="text-center mb-10">
+      <h2 class="text-4xl font-extrabold text-gray-900 dark:text-white">
+        Nuestros Servicios
       </h2>
-      <p class="text-gray-500 text-xl text-center leading-6">
-        Planes de Auditorias y Administracíon.
+      <p class="text-lg text-gray-600 dark:text-gray-300">
+        Selecciona el plan que mejor se adapte a tus necesidades.
       </p>
+    </div>
 
-      <!--Switch-->
-      <div class="tabs">
+    <div class="grid md:grid-cols-2 gap-8">
+      {plans.map((plan) => (
         <div
-          id="tabs-with-background-1"
-          role="tabpanel"
-          aria-labelledby="tabs-with-background-item-1"
-          class="tabcontent"
-          style=""
+          class={`relative bg-white dark:bg-gray-800 shadow-xl rounded-xl p-8 border border-gray-200 dark:border-gray-700 transition-transform transform hover:scale-105 ${
+            plan.popular ? "ring-2 ring-indigo-500" : ""
+          }`}
         >
-          <div class="lg:grid lg:grid-cols-2 sm:gap-6 xl:gap-2">
-            <!--Pricing Card-->
-            <div
-              class="group relative flex flex-col mx-auto w-full text-gray-900 rounded-2xl border border-solid border-gray-300 text-center transition-all duration-300 hover:border-indigo-600 p-10 mt-10"
+          {plan.popular && (
+            <span
+              class="absolute top-4 right-4 bg-indigo-600 text-white text-xs font-bold uppercase px-3 py-1 rounded-full"
             >
-              <h3 class="font-manrope text-2xl font-bold">
-                Administración Condominios
-              </h3>
-              <div class="flex flex-col">
-                <span class="font-manrope text-6xl font-semibold">Mensual</span>
-                <span class="text-xl text-gray-400">Garantía</span>
-              </div>
+              Más Popular
+            </span>
+          )}
 
-              <WhatsappBtn phone="1234567890" />
+          <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">
+            {plan.name}
+          </h3>
+          <p class="text-gray-600 dark:text-gray-300 mb-4">{plan.description}</p>
 
-              <!--List End-->
-            </div>
-            <div
-              class="group relative flex flex-col mx-auto w-full text-gray-900 rounded-2xl border border-solid border-gray-300 text-center transition-all duration-300 hover:border-indigo-600 p-10 mt-10"
-            >
-              <h3 class="font-manrope text-2xl font-bold">
-                Auditorías Condominios
-              </h3>
-              <div class="flex flex-col">
-                <span class="font-manrope text-6xl font-semibold">Mensual</span>
-                <span class="text-xl text-gray-400">Garantía</span>
-              </div>
-              <WhatsappBtn phone="1234567890" />
-              <!--List End-->
-            </div>
+          <ul class="space-y-2 mb-6">
+            {plan.features.map((feature) => (
+              <li class="flex items-center text-gray-700 dark:text-gray-300">
+                <svg
+                  class="w-5 h-5 text-green-500 mr-2"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M16.707 5.293a1 1 0 00-1.414 0L8 12.586l-3.293-3.293a1 1 0 00-1.414 1.414l4 4a1 1 0 001.414 0l8-8a1 1 0 000-1.414z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                {feature}
+              </li>
+            ))}
+          </ul>
+
+          <!-- Botón de WhatsApp -->
+          <div class="text-center">
+            <WhatsappBtn phone="1234567890" />
           </div>
         </div>
-        <div
-          id="tabs-with-background-2"
-          class="tabcontent"
-          role="tabpanel"
-          aria-labelledby="tabs-with-background-item-2"
-          style="display: none"
-        >
-          <div
-            class="space-y-8 lg:grid lg:grid-cols-3 sm:gap-6 xl:gap-8 lg:space-y-0"
-          >
-            <!--Pricing Card-->
-            <div
-              class="group relative flex flex-col mx-auto w-full max-w-sm text-gray-900 rounded-2xl border border-solid border-gray-300 text-center transition-all duration-300 p-6 xl:p-12 hover:border-indigo-600"
-            >
-              <h3 class="font-manrope text-2xl font-bold">Free</h3>
-              <div class="flex flex-col">
-                <span class="font-manrope text-6xl font-semibold">$0</span>
-                <span class="text-xl text-gray-400">Lifetime</span>
-              </div>
-              <a
-                href="javascript:;"
-                class="py-2.5 px-5 bg-indigo-50 shadow-sm rounded-full transition-all duration-500 text-base text-indigo-600 font-semibold text-center w-fit mx-auto group-hover:bg-indigo-600 group-hover:text-white"
-                >Purchase Plan</a
-              >
-              <!--List End-->
-            </div>
-            <!--Pricing Card-->
-            <div
-              class="group relative flex flex-col mx-auto w-full max-w-sm text-gray-900 rounded-2xl border border-solid border-gray-300 text-center transition-all duration-500 p-6 xl:p-12 bg-gradient-to-r from-indigo-600 to-violet-600 hover:before:opacity-100 before:contents[' '] before:absolute before:bg-indigo-800 before:w-full before:h-full before:top-0 before:left-0 before:rounded-2xl before:opacity-0 before:transition-all before:duration-500 before:z-0"
-            >
-              <h3
-                class="relative flex items-center justify-center font-manrope text-2xl font-bold text-white"
-              >
-                Advanced
-                <span
-                  class="h-6 px-3 relative rounded-full border border-solid border-gray-100 text-sm ml-4"
-                  >Popular</span
-                >
-              </h3>
-              <div class="flex flex-col relative">
-                <span class="font-manrope text-6xl font-semibold text-white"
-                  >$39</span
-                >
-                <span class="text-xl text-gray-300">Per Month</span>
-              </div>
-              <a
-                href="javascript:;"
-                class="relative py-2.5 px-5 bg-white shadow-sm rounded-full transition-all duration-500 text-base text-indigo-600 font-semibold text-center w-fit mx-auto"
-                >Purchase Plan</a
-              >
-              <!--List End-->
-            </div>
-            <!--Pricing Card-->
-            <div
-              class="group relative flex flex-col mx-auto w-full max-w-sm text-gray-900 rounded-2xl border border-solid border-gray-300 text-center transition-all duration-300 p-8 xl:p-12 hover:border-indigo-600"
-            >
-              <h3 class="font-manrope text-2xl font-bold">Team</h3>
-              <div class="flex flex-col">
-                <span class="font-manrope text-6xl font-semibold">$49</span>
-                <span class="text-xl text-gray-400">Per Month</span>
-              </div>
-              <a
-                href="javascript:;"
-                class="py-2.5 px-5 bg-indigo-50 shadow-sm rounded-full transition-all duration-500 text-base text-indigo-600 font-semibold text-center w-fit mx-auto group-hover:bg-indigo-600 group-hover:text-white"
-                >Purchase Plan</a
-              >
-              <!--List End-->
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!--Switch End-->
+      ))}
     </div>
   </div>
 </section>
