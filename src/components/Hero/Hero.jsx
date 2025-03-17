@@ -1,74 +1,133 @@
-import { motion } from "framer-motion";
+import React, { useState, useEffect, useRef } from "react";
+import { motion, useInView } from "framer-motion";
 
-const fadeInUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 1, ease: "easeOut" } },
+// Hook mejorado para efecto de máquina de escribir
+const useTypewriter = (text, isVisible, speed = 100) => {
+  const [displayText, setDisplayText] = useState("");
+  const [index, setIndex] = useState(0);
+  const intervalRef = useRef(null);
+
+  useEffect(() => {
+    if (isVisible) {
+      setDisplayText(""); // Reiniciar el texto
+      setIndex(0);
+
+      intervalRef.current = setInterval(() => {
+        setIndex((prevIndex) => {
+          if (prevIndex < text.length) {
+            setDisplayText(text.slice(0, prevIndex + 1));
+            return prevIndex + 1;
+          } else {
+            clearInterval(intervalRef.current);
+            return prevIndex;
+          }
+        });
+      }, speed);
+    }
+
+    return () => clearInterval(intervalRef.current);
+  }, [text, isVisible, speed]);
+
+  return displayText;
 };
 
-const fadeInRight = {
-  hidden: { opacity: 0, x: 50 },
-  visible: { opacity: 1, x: 0, transition: { duration: 1, ease: "easeOut" } },
-};
+const HeroSection = () => {
+  const heroRef = useRef(null);
+  const isInView = useInView(heroRef, { threshold: 0.5 });
 
-export default function Hero() {
+  const typedText = useTypewriter("Auditoría para Condominios", isInView, 100);
+
   return (
-    <section className="relative w-full h-screen flex items-center justify-center bg-gray-900 text-white">
-      {/* Fondo con degradado */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black via-gray-800 to-gray-900 opacity-80"></div>
+    <section
+      ref={heroRef}
+      className="relative flex flex-col lg:flex-row items-center justify-between px-8 lg:px-16 py-20 min-h-screen pt-30"
+    >
+      {/* Contenido de la izquierda */}
+      <motion.div
+        initial={{ opacity: 0, x: -50 }}
+        animate={isInView ? { opacity: 1, x: 0 } : {}}
+        transition={{ duration: 1 }}
+        className="lg:w-1/2 text-center lg:text-left"
+      >
+        <span className="inline-block bg-gray-100 text-gray-600 px-4 py-2 rounded-full text-sm font-medium mb-4 shadow-lg">
+          Administración de Condominios
+        </span>
+        <h1 className="text-4xl lg:text-6xl font-bold leading-tight text-black drop-shadow-lg">
+          {typedText}
+        </h1>
+        <p className="text-gray-600 mt-4 text-lg">
+          Optimizamos la administración y auditoría de condominios con
+          soluciones innovadoras y seguras. Confía en nosotros para la gestión
+          eficiente de tu comunidad.
+        </p>
 
-      {/* Contenedor principal */}
-      <div className="relative z-10 container mx-auto flex flex-col md:flex-row items-center px-6 lg:px-20">
-        {/* Texto con animaciones */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={fadeInUp}
-          className="text-white text-center md:text-left max-w-2xl"
-        >
-          <h1 className="text-6xl font-extrabold leading-tight">
-            Gestión y Auditoría <br />
-            <span className="text-blue-500">para Condominios</span>
-          </h1>
-          <p className="text-xl text-gray-300 mt-4 max-w-md">
-            Optimizamos la administración y auditoría de condominios con
-            soluciones innovadoras y seguras. Confía en nosotros para la gestión
-            eficiente de tu comunidad.
-          </p>
+        <div className="mt-6 flex flex-col sm:flex-row gap-4">
           <motion.a
-            href="#contacto"
-            className="mt-6 inline-block px-8 py-4 bg-blue-600 text-white font-bold text-lg rounded-lg shadow-lg hover:bg-blue-500 transition"
+            href="#"
             whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
+            className="px-6 py-3 bg-blue-600 text-white rounded-full text-lg font-medium shadow-lg transition-transform hover:shadow-xl"
           >
-            Contáctanos
+            Comienza ahora →
           </motion.a>
-        </motion.div>
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            className="flex items-center gap-2 text-gray-700 transition"
+          >
+            <div className="w-12 h-12 rounded-full border-2 border-gray-400 flex items-center justify-center hover:scale-105">
+              ▶️
+            </div>
+            Ver Demo
+          </motion.button>
+        </div>
+      </motion.div>
 
-        {/* Imagen con animaciones */}
+      {/* Imagen de la derecha con cobertura completa */}
+      <motion.div
+        initial={{ opacity: 0, x: 50 }}
+        animate={isInView ? { opacity: 1, x: 0 } : {}}
+        transition={{ duration: 1, delay: 0.5 }}
+        className="relative lg:w-1/2 flex justify-center mt-12 lg:mt-0"
+      >
         <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={fadeInRight}
-          className="md:w-1/2 mt-8 md:mt-0 relative"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={isInView ? { opacity: 1, scale: 1 } : {}}
+          transition={{ duration: 1 }}
+          className="relative w-[400px] h-[400px] overflow-hidden rounded-xl shadow-lg"
         >
           <img
-            src="https://source.unsplash.com/600x400/?building,city"
-            alt="Edificio empresarial"
-            className="rounded-lg shadow-lg"
+            src="assets/imagenes/logos/servadec.png"
+            alt="Viajero con binoculares"
+            className="w-full h-full object-cover"
           />
+
+          {/* Etiquetas flotantes */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{
-              opacity: 1,
-              scale: 1,
-              transition: { duration: 1.2, ease: "easeOut" },
-            }}
-            className="absolute -top-10 -right-10 bg-blue-500 p-4 rounded-lg shadow-lg text-white text-lg font-bold"
+            initial={{ opacity: 0, y: -20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 1, delay: 1 }}
+            className="absolute top-8 left-0 bg-white shadow-lg px-4 py-2 rounded-full flex items-center gap-2"
           >
-            +10 Años de Experiencia
+            <span className="w-6 h-6 rounded-full bg-blue-600"></span>
+            <span className="text-sm font-medium text-gray-900">
+              DIY Yogyakarta
+            </span>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 1, delay: 1.2 }}
+            className="absolute bottom-6 right-0 bg-white shadow-lg px-4 py-2 rounded-xl"
+          >
+            <span className="text-sm font-medium text-gray-900 flex items-center gap-2">
+              🌅 Playa de Pangandaran
+              <span className="text-yellow-500">⭐ 5.0 (24 reseñas)</span>
+            </span>
           </motion.div>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
-}
+};
+
+export default HeroSection;

@@ -4,7 +4,7 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import { useRef, useEffect, useState } from "react";
 
-// Datos personalizados para los testimonios
+// Datos de testimonios
 const testimonials = [
   {
     name: "María López",
@@ -35,14 +35,14 @@ const testimonials = [
 ];
 
 export default function TestimonialSlider({
-  imgSize = "w-16 h-16 rounded-full border-4 border-indigo-500",
+  imgSize = "w-16 h-16 rounded-full",
 }) {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
   const [swiperInstance, setSwiperInstance] = useState(null);
 
   useEffect(() => {
-    if (swiperInstance && prevRef.current && nextRef.current) {
+    if (swiperInstance) {
       swiperInstance.params.navigation.prevEl = prevRef.current;
       swiperInstance.params.navigation.nextEl = nextRef.current;
       swiperInstance.navigation.init();
@@ -51,25 +51,20 @@ export default function TestimonialSlider({
   }, [swiperInstance]);
 
   return (
-    <section
-      data-aos="fade-up"
-      className="relative py-20 bg-gradient-to-r from-gray-100 to-gray-50 dark:from-gray-900 dark:to-gray-800"
-    >
+    <section className="relative py-20  bg-gray-900">
       <div className="max-w-5xl mx-auto text-center">
-        <h2 className="text-4xl font-bold text-gray-900 dark:text-white">
-          Clientes Felices
-        </h2>
-        <p className="text-lg text-gray-600 dark:text-gray-300 mt-2">
+        <h2 className="text-4xl font-bold  text-white">Clientes Felices</h2>
+        <p className="text-lg  text-gray-300 mt-2">
           Nuestros clientes nos avalan con su confianza.
         </p>
       </div>
 
-      {/* Contenedor del Swiper con flechas de navegación */}
-      <div className="relative max-w-6xl mx-auto mt-10">
+      {/* Contenedor del Swiper */}
+      <div className="relative max-w-8xl mx-auto mt-10 px-4">
         {/* Flecha izquierda */}
         <button
           ref={prevRef}
-          className="absolute top-1/2 -translate-y-1/2 left-0 w-12 h-12 flex items-center justify-center bg-indigo-500 hover:bg-indigo-700 text-white rounded-full shadow-lg transition-all z-10"
+          className="absolute top-1/2 -translate-y-1/2 left-0 w-12 h-12 flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 text-white rounded-full shadow-md transition-all z-10"
         >
           ❮
         </button>
@@ -77,45 +72,35 @@ export default function TestimonialSlider({
         <Swiper
           modules={[Navigation]}
           spaceBetween={10}
-          slidesPerView={1}
-          breakpoints={{
-            640: { slidesPerView: 1 },
-            768: { slidesPerView: 2 },
-            1024: { slidesPerView: 2 },
-          }}
+          slidesPerView="auto"
+          centeredSlides={false}
+          watchOverflow={true}
+          loop={false}
+          onSwiper={setSwiperInstance}
           navigation={{ prevEl: prevRef.current, nextEl: nextRef.current }}
-          onSwiper={(swiper) => setSwiperInstance(swiper)}
-          className="py-10"
+          className="py-10 pr-10" // Agregamos padding-right
         >
           {testimonials.map((testimonial, index) => (
-            <SwiperSlide key={index} className="flex justify-center">
-              <div className="relative bg-white dark:bg-gray-800 shadow-xl rounded-2xl p-6 text-left transition-transform duration-300 hover:shadow-2xl hover:-translate-y-2 border border-gray-200 dark:border-gray-700">
-                {/* Comillas decorativas */}
-                <span className="absolute top-4 left-4 text-5xl text-indigo-500 dark:text-indigo-400 opacity-20">
-                  ❝
-                </span>
-
-                {/* Testimonio */}
-                <p className="text-lg text-gray-700 dark:text-gray-300 italic leading-relaxed">
-                  "{testimonial.feedback}"
-                </p>
-
-                {/* Perfil del usuario */}
-                <div className="mt-6 flex items-center space-x-4">
+            <SwiperSlide
+              key={index}
+              className="flex justify-center w-auto min-w-[80%] sm:min-w-[50%] md:min-w-[40%] lg:min-w-[30%]"
+            >
+              <div className=" bg-gray-800 shadow-lg rounded-xl p-10 w-full max-w-md text-left transform transition duration-300 hover:shadow-2xl">
+                <p className=" text-gray-300 ">"{testimonial.feedback}"</p>
+                <div className="mt-5 flex items-center">
                   <img
                     src={testimonial.image}
-                    className={testimonial.imageClass || imgSize}
+                    className={`${imgSize} border-2 border-indigo-500`}
                     alt={testimonial.name}
                   />
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                  <div className="ml-3">
+                    <h3 className="font-semibold  text-white">
                       {testimonial.name}
                     </h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      {testimonial.empresa}
-                    </p>
+                    <p className="text-gray-500">{testimonial.empresa}</p>
                   </div>
                 </div>
+                0
               </div>
             </SwiperSlide>
           ))}
@@ -124,7 +109,7 @@ export default function TestimonialSlider({
         {/* Flecha derecha */}
         <button
           ref={nextRef}
-          className="absolute top-1/2 -translate-y-1/2 right-0 w-12 h-12 flex items-center justify-center bg-indigo-500 hover:bg-indigo-700 text-white rounded-full shadow-lg transition-all z-10"
+          className="absolute top-1/2 -translate-y-1/2 right-0 w-12 h-12 flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 text-white rounded-full shadow-md transition-all z-10"
         >
           ❯
         </button>

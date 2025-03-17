@@ -59,7 +59,7 @@ const Footer = () => {
   return (
     <footer
       ref={footerRef}
-      className="relative bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-200 px-10 md:px-30 py-16 w-full"
+      className="relative  bg-gray-900  text-gray-200 px-10 md:px-30 py-16 w-full"
     >
       {/* Encabezado del Footer */}
       <div className="mx-auto flex flex-col md:flex-row justify-between items-center text-center md:text-left">
@@ -70,11 +70,9 @@ const Footer = () => {
           className="w-full md:w-1/2"
         >
           <h2 className="text-4xl md:text-5xl font-extrabold leading-tight">
-            <span className="text-gray-900 dark:text-white">Gestionamos</span>{" "}
-            <span className="text-indigo-600 dark:text-indigo-400">{text}</span>
-            <span className="text-indigo-600 dark:text-indigo-400 cursor-blink">
-              |
-            </span>
+            <span className=" text-white">Gestionamos</span>{" "}
+            <span className=" text-indigo-400">{text}</span>
+            <span className=" text-indigo-400 cursor-blink">|</span>
           </h2>
         </motion.div>
 
@@ -83,17 +81,17 @@ const Footer = () => {
           initial={{ scale: 1 }}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="mt-8 md:mt-0 bg-indigo-600 dark:bg-indigo-500 text-white px-8 py-3 text-lg font-bold rounded-full shadow-lg transition duration-300 hover:bg-indigo-700 dark:hover:bg-indigo-400"
+          className="mt-8 md:mt-0  bg-indigo-500 text-white px-8 py-3 text-lg font-bold rounded-full shadow-lg transition duration-300  hover:bg-indigo-400"
         >
           Agenda una reunión
         </motion.a>
       </div>
 
       {/* Sección de enlaces con Copyright */}
-      <div className="mt-12 border-t border-gray-300 dark:border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center">
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-8 text-center md:text-left">
+      <div className="mt-12 border-t  border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center w-full">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-8  md:text-left text-left w-full">
           {/* Primera columna de enlaces */}
-          <ul className="space-y-2 text-gray-600 dark:text-gray-400 text-md">
+          <ul className="space-y-2  text-gray-400 text-md">
             {[
               { name: "Inicio", href: "#" },
               { name: "Servicios", href: "#" },
@@ -104,17 +102,17 @@ const Footer = () => {
               <li key={link.name} className="group relative">
                 <a
                   href={link.href}
-                  className="relative transition-all duration-300 ease-in-out group-hover:text-indigo-600 dark:group-hover:text-indigo-400 group-hover:-translate-y-1"
+                  className="relative transition-all duration-300 ease-in-out  group-hover:text-indigo-400 group-hover:-translate-y-1"
                 >
                   {link.name}
-                  <span className="absolute left-1/2 bottom-0 w-0 h-0.5 bg-indigo-600 dark:bg-indigo-400 transition-all duration-300 ease-in-out group-hover:w-full group-hover:left-0"></span>
+                  <span className="absolute left-1/2 bottom-0 w-0 h-0.5  bg-indigo-400 transition-all duration-300 ease-in-out group-hover:w-full group-hover:left-0"></span>
                 </a>
               </li>
             ))}
           </ul>
 
           {/* Segunda columna de enlaces */}
-          <ul className="space-y-2 text-gray-600 dark:text-gray-400 text-md">
+          <ul className="space-y-2  text-gray-400 text-md">
             {[
               { name: "Agendar reunión", href: "#" },
               { name: "Transparencia", href: "#" },
@@ -125,10 +123,10 @@ const Footer = () => {
               <li key={link.name} className="group relative">
                 <a
                   href={link.href}
-                  className="relative transition-all duration-300 ease-in-out group-hover:text-indigo-600 dark:group-hover:text-indigo-400 group-hover:-translate-y-1"
+                  className="relative transition-all duration-300 ease-in-out  group-hover:text-indigo-400 group-hover:-translate-y-1"
                 >
                   {link.name}
-                  <span className="absolute left-1/2 bottom-0 w-0 h-0.5 bg-indigo-600 dark:bg-indigo-400 transition-all duration-300 ease-in-out group-hover:w-full group-hover:left-0"></span>
+                  <span className="absolute left-1/2 bottom-0 w-0 h-0.5  bg-indigo-400 transition-all duration-300 ease-in-out group-hover:w-full group-hover:left-0"></span>
                 </a>
               </li>
             ))}
@@ -138,7 +136,7 @@ const Footer = () => {
         </div>
 
         {/* Copyright Dinámico */}
-        <div className="mt-8 md:mt-0 text-gray-500 dark:text-gray-400 text-md text-center md:text-right">
+        <div className="mt-8 md:mt-0   text-md  md:text-right w-full">
           © {currentYear} Todos los derechos reservados.
         </div>
       </div>
