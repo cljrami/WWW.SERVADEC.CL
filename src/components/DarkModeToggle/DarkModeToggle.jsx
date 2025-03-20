@@ -1,40 +1,35 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
-export default function DarkModeToggle() {
-  const [darkMode, setDarkMode] = useState(
-    typeof window !== "undefined"
-      ? localStorage.getItem("theme") === "dark"
-      : false
-  );
+const DarkModeToggle = () => {
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
+  // Alternar el modo oscuro
+  const toggleDarkMode = () => {
+    setIsDarkMode((prev) => !prev);
+  };
+
+  // Efecto para actualizar la clase `dark` en el <html>
   useEffect(() => {
-    if (darkMode) {
+    if (isDarkMode) {
       document.documentElement.classList.add("dark");
       localStorage.setItem("theme", "dark");
     } else {
       document.documentElement.classList.remove("dark");
       localStorage.setItem("theme", "light");
     }
-  }, [darkMode]);
+  }, [isDarkMode]);
 
   return (
-    <button
-      onClick={() => setDarkMode(!darkMode)}
-      className="relative flex items-center p-2 rounded-full bg-gray-200 dark:bg-gray-800 transition duration-300 shadow-lg"
-    >
-      {/* Icono de Sol */}
-      <i
-        className={`fas fa-sun text-yellow-500 text-xl transform transition-all duration-500 ${
-          darkMode ? "scale-0" : "scale-100"
-        }`}
-      ></i>
-
-      {/* Icono de Luna */}
-      <i
-        className={`fas fa-moon text-blue-400 text-xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-all duration-500 ${
-          darkMode ? "scale-100" : "scale-0"
-        }`}
-      ></i>
-    </button>
+    <div className="bg-white dark:bg-gray-900">
+      {/* Botón para alternar el modo oscuro */}
+      <button
+        onClick={toggleDarkMode}
+        className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white rounded-md shadow"
+      >
+        {isDarkMode ? "Alternar a Modo Claro" : "Alternar a Modo Oscuro"}
+      </button>
+    </div>
   );
-}
+};
+
+export default DarkModeToggle;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 
-// Hook mejorado para efecto de máquina de escribir
+// Hook para efecto de máquina de escribir
 const useTypewriter = (text, isVisible, speed = 100) => {
   const [displayText, setDisplayText] = useState("");
   const [index, setIndex] = useState(0);
@@ -33,20 +33,20 @@ const useTypewriter = (text, isVisible, speed = 100) => {
 
 const HeroSection = () => {
   const heroRef = useRef(null);
-  const isInView = useInView(heroRef, { threshold: 0.5 });
+  const isInView = useInView(heroRef, { threshold: 0.3 });
 
   const typedText = useTypewriter("Auditoría para Condominios", isInView, 100);
 
   return (
     <section
       ref={heroRef}
-      className="relative flex flex-col lg:flex-row items-center justify-between px-8 lg:px-16 py-20 min-h-screen pt-30"
+      className="relative flex flex-col lg:flex-row items-center justify-between px-8 lg:px-16 py-20 min-h-screen overflow-hidden pt-30"
     >
-      {/* Contenido de la izquierda */}
+      {/* Contenido Izquierdo */}
       <motion.div
-        initial={{ opacity: 0, x: -50 }}
-        animate={isInView ? { opacity: 1, x: 0 } : {}}
-        transition={{ duration: 1 }}
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={isInView ? { opacity: 1, scale: 1 } : {}}
+        transition={{ duration: 1, ease: "easeOut" }}
         className="lg:w-1/2 text-center lg:text-left"
       >
         <span className="inline-block bg-gray-100 text-gray-600 px-4 py-2 rounded-full text-sm font-medium mb-4 shadow-lg">
@@ -81,50 +81,20 @@ const HeroSection = () => {
         </div>
       </motion.div>
 
-      {/* Imagen de la derecha con cobertura completa */}
+      {/* Imagen Derecha con Animación Zoom */}
       <motion.div
-        initial={{ opacity: 0, x: 50 }}
-        animate={isInView ? { opacity: 1, x: 0 } : {}}
-        transition={{ duration: 1, delay: 0.5 }}
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={isInView ? { opacity: 1, scale: 1 } : {}}
+        transition={{ duration: 1, ease: "easeOut", delay: 0.5 }}
         className="relative lg:w-1/2 flex justify-center mt-12 lg:mt-0"
       >
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={isInView ? { opacity: 1, scale: 1 } : {}}
-          transition={{ duration: 1 }}
-          className="relative w-[400px] h-[400px] overflow-hidden rounded-xl shadow-lg"
-        >
+        <div className="relative w-[400px] h-[400px] overflow-hidden rounded-xl shadow-lg">
           <img
-            src="assets/imagenes/logos/servadec.png"
-            alt="Viajero con binoculares"
+            src="/assets/imagenes/logos/servadec.png"
+            alt="Auditoría de Condominios"
             className="w-full h-full object-cover"
           />
-
-          {/* Etiquetas flotantes */}
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 1, delay: 1 }}
-            className="absolute top-8 left-0 bg-white shadow-lg px-4 py-2 rounded-full flex items-center gap-2"
-          >
-            <span className="w-6 h-6 rounded-full bg-blue-600"></span>
-            <span className="text-sm font-medium text-gray-900">
-              DIY Yogyakarta
-            </span>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 1, delay: 1.2 }}
-            className="absolute bottom-6 right-0 bg-white shadow-lg px-4 py-2 rounded-xl"
-          >
-            <span className="text-sm font-medium text-gray-900 flex items-center gap-2">
-              🌅 Playa de Pangandaran
-              <span className="text-yellow-500">⭐ 5.0 (24 reseñas)</span>
-            </span>
-          </motion.div>
-        </motion.div>
+        </div>
       </motion.div>
     </section>
   );

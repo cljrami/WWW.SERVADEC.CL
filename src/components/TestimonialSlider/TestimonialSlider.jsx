@@ -41,6 +41,7 @@ export default function TestimonialSlider({
   const nextRef = useRef(null);
   const [swiperInstance, setSwiperInstance] = useState(null);
 
+  // Inicializa la navegación del carrusel
   useEffect(() => {
     if (swiperInstance) {
       swiperInstance.params.navigation.prevEl = prevRef.current;
@@ -51,56 +52,80 @@ export default function TestimonialSlider({
   }, [swiperInstance]);
 
   return (
-    <section className="relative py-20  bg-gray-900">
+    <section className="relative py-16 bg-gradient-to-b from-gray-100 to-white">
+      {/* Título y descripción */}
       <div className="max-w-5xl mx-auto text-center">
-        <h2 className="text-4xl font-bold  text-white">Clientes Felices</h2>
-        <p className="text-lg  text-gray-300 mt-2">
+        <h2 className="text-4xl font-bold text-gray-800 animate-fadeIn">
+          ❤️ Lo que dicen nuestros clientes
+        </h2>
+        <p className="text-lg text-gray-600 mt-2 animate-slideUp">
           Nuestros clientes nos avalan con su confianza.
         </p>
       </div>
 
       {/* Contenedor del Swiper */}
-      <div className="relative max-w-8xl mx-auto mt-10 px-4">
+      <div className="relative max-w-9xl mx-auto mt-10 px-6">
         {/* Flecha izquierda */}
         <button
           ref={prevRef}
-          className="absolute top-1/2 -translate-y-1/2 left-0 w-12 h-12 flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 text-white rounded-full shadow-md transition-all z-10"
+          aria-label="Anterior testimonio"
+          className="absolute top-1/2 -translate-y-1/2 left-0 w-12 h-12 flex items-center justify-center bg-white hover:bg-gray-200 text-gray-800 rounded-full shadow-xl transition-all z-10 scale-105 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-green-400"
         >
-          ❮
+          <svg
+            className="w-6 h-6"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
         </button>
 
+        {/* Carrusel */}
         <Swiper
           modules={[Navigation]}
-          spaceBetween={10}
+          spaceBetween={20}
           slidesPerView="auto"
           centeredSlides={false}
-          watchOverflow={true}
           loop={false}
           onSwiper={setSwiperInstance}
           navigation={{ prevEl: prevRef.current, nextEl: nextRef.current }}
-          className="py-10 pr-10" // Agregamos padding-right
+          className="py-10"
         >
           {testimonials.map((testimonial, index) => (
             <SwiperSlide
               key={index}
               className="flex justify-center w-auto min-w-[80%] sm:min-w-[50%] md:min-w-[40%] lg:min-w-[30%]"
             >
-              <div className=" bg-gray-800 shadow-lg rounded-xl p-10 w-full max-w-md text-left transform transition duration-300 hover:shadow-2xl">
-                <p className=" text-gray-300 ">"{testimonial.feedback}"</p>
-                <div className="mt-5 flex items-center">
+              <div className="relative bg-white border border-gray-200 shadow-lg rounded-2xl p-8 w-full max-w-md text-left transition-all duration-500 hover:shadow-2xl hover:scale-[1.02] hover:-translate-y-2">
+                {/* Cita */}
+                <p className="text-gray-700 italic text-lg">
+                  "{testimonial.feedback}"
+                </p>
+
+                {/* Perfil */}
+                <div className="mt-6 flex items-center gap-4">
                   <img
                     src={testimonial.image}
-                    className={`${imgSize} border-2 border-indigo-500`}
-                    alt={testimonial.name}
+                    alt={`Foto de ${testimonial.name}`}
+                    className={`${imgSize} border-2 border-gray-300 shadow-md`}
                   />
-                  <div className="ml-3">
-                    <h3 className="font-semibold  text-white">
+                  <div>
+                    <h3 className="font-semibold text-gray-900 text-lg">
                       {testimonial.name}
                     </h3>
-                    <p className="text-gray-500">{testimonial.empresa}</p>
+                    <p className="text-gray-500 text-sm">
+                      {testimonial.empresa}
+                    </p>
                   </div>
                 </div>
-                0
+
+                {/* Animación de fondo */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent to-gray-100 opacity-0 hover:opacity-30 transition-opacity duration-500 rounded-2xl"></div>
               </div>
             </SwiperSlide>
           ))}
@@ -109,9 +134,21 @@ export default function TestimonialSlider({
         {/* Flecha derecha */}
         <button
           ref={nextRef}
-          className="absolute top-1/2 -translate-y-1/2 right-0 w-12 h-12 flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 text-white rounded-full shadow-md transition-all z-10"
+          aria-label="Siguiente testimonio"
+          className="absolute top-1/2 -translate-y-1/2 right-0 w-12 h-12 flex items-center justify-center bg-white hover:bg-gray-200 text-gray-800 rounded-full shadow-xl transition-all z-10 scale-105 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-green-400"
         >
-          ❯
+          <svg
+            className="w-6 h-6"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
         </button>
       </div>
     </section>
