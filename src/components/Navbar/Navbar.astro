@@ -1,5 +1,5 @@
 ---
-const logoImage = "/assets/logos/admincondominios.png";
+const logoImage = "/assets/logos/admincondominios.png"; // Ruta personalizable
 
 const menuItems = [
   { label: "Inicio", href: "/" },
@@ -19,14 +19,14 @@ const mobileImage =
 ---
 
 <header
-  id="main-navbar"
-  class="fixed top-0 left-0 w-full z-50 bg-white dark:bg-gray-900 shadow-sm transition-all duration-300 transform translate-y-0"
+  class="fixed top-0 left-0 w-full z-50 bg-white dark:bg-gray-900 shadow-sm transition-all duration-300"
 >
   <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
     <a href="/" class="flex items-center gap-2">
       <img src={logoImage} alt="Logo" class="h-8 md:h-10 object-contain" />
     </a>
 
+    <!-- Menú Desktop -->
     <nav class="hidden md:flex space-x-6 items-center">
       {
         menuItems.map((item) => (
@@ -42,6 +42,7 @@ const mobileImage =
       }
     </nav>
 
+    <!-- Botón menú móvil -->
     <button
       id="menu-btn"
       class="md:hidden text-2xl text-gray-900 dark:text-white"
@@ -50,6 +51,7 @@ const mobileImage =
     </button>
   </div>
 
+  <!-- Overlay y menú lateral -->
   <div
     id="mobile-overlay"
     class="fixed inset-0 z-40 hidden bg-black/40 backdrop-blur-sm transition-opacity duration-300"
@@ -62,7 +64,7 @@ const mobileImage =
         class="flex justify-between items-center px-4 py-4 border-b border-gray-200 dark:border-gray-700"
       >
         <a href="/" class="flex items-center gap-2">
-          <img src={logoImage} alt="Logo" class="h-8 object-contain" />
+          <img src={logoImage} alt="Logo" class="h-8 md:h-10 object-contain" />
         </a>
         <button id="menu-close" class="text-2xl text-gray-800 dark:text-white">
           <i class="fas fa-times"></i>
@@ -76,6 +78,7 @@ const mobileImage =
       />
 
       <nav
+        id="mobile-links"
         class="flex flex-col divide-y divide-gray-200 dark:divide-gray-700 text-gray-900 dark:text-white"
       >
         {
@@ -118,7 +121,6 @@ const mobileImage =
     const menuClose = document.getElementById("menu-close");
     const overlay = document.getElementById("mobile-overlay");
     const menu = document.getElementById("mobile-menu");
-    const navbar = document.getElementById("main-navbar");
 
     const openMenu = () => {
       overlay.classList.remove("hidden");
@@ -140,19 +142,9 @@ const mobileImage =
 
     menuBtn?.addEventListener("click", openMenu);
     menuClose?.addEventListener("click", closeMenu);
+
     overlay?.addEventListener("click", (e) => {
       if (!menu.contains(e.target)) closeMenu();
-    });
-
-    let lastScroll = window.scrollY;
-    window.addEventListener("scroll", () => {
-      const currentScroll = window.scrollY;
-      if (currentScroll > lastScroll && currentScroll > 50) {
-        navbar.style.transform = "translateY(-100%)";
-      } else {
-        navbar.style.transform = "translateY(0)";
-      }
-      lastScroll = currentScroll;
     });
   </script>
 </header>
