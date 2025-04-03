@@ -35,6 +35,9 @@ const menuConfig = {
   data-scroll-threshold={menuConfig.scrollThreshold}
   data-logo={logoImage}
   data-logo-scrolled={scrolledLogoImage}
+  data-text-initial="text-white"
+  data-text-scrolled="text-gray-800"
+  data-text-dark="text-white"
 >
   <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
     <a href="/" class="flex items-center gap-2 menu-link">
@@ -42,7 +45,7 @@ const menuConfig = {
         id="main-logo"
         src={logoImage}
         alt="Logo"
-        class="h-8 md:h-10 object-contain"
+        class="h-8 md:h-10 object-contain transition duration-300"
       />
     </a>
 
@@ -53,7 +56,7 @@ const menuConfig = {
           <div>
             <a
               href={item.href || "#"}
-              class="text-gray-800 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition font-medium menu-link"
+              class="menu-link font-medium transition duration-300"
             >
               {item.label}
             </a>
@@ -65,9 +68,9 @@ const menuConfig = {
     <!-- Botón menú móvil -->
     <button
       id="menu-btn"
-      class="md:hidden text-2xl text-gray-900 dark:text-white"
+      class="md:hidden text-2xl transition-all duration-300 transform hover:scale-110 menu-icon"
     >
-      <i class="fas fa-bars"></i>
+      <i class="fas fa-bars transition-transform duration-300"></i>
     </button>
   </div>
 
@@ -88,11 +91,14 @@ const menuConfig = {
             id="mobile-logo"
             src={logoImage}
             alt="Logo"
-            class="h-8 md:h-10 object-contain"
+            class="h-8 md:h-10 object-contain transition duration-300"
           />
         </a>
-        <button id="menu-close" class="text-2xl text-gray-800 dark:text-white">
-          <i class="fas fa-times"></i>
+        <button
+          id="menu-close"
+          class="text-2xl transition-all duration-300 transform hover:rotate-90 menu-icon"
+        >
+          <i class="fas fa-times transition-transform duration-300"></i>
         </button>
       </div>
 
@@ -117,10 +123,7 @@ const menuConfig = {
                   </summary>
                   <div class="flex flex-col text-sm">
                     {item.submenu.map((sub) => (
-                      <a
-                        href={sub.href}
-                        class="px-8 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition menu-link"
-                      >
+                      <a href={sub.href} class="px-8 py-2 transition menu-link">
                         {sub.label}
                       </a>
                     ))}
@@ -148,32 +151,37 @@ const menuConfig = {
     const menu = document.getElementById("mobile-menu");
     const header = document.getElementById("main-header");
     const menuLinks = document.querySelectorAll(".menu-link");
+    const menuIcons = document.querySelectorAll(".menu-icon");
     const mainLogo = document.getElementById("main-logo");
     const mobileLogo = document.getElementById("mobile-logo");
 
-    const initialBg = header.dataset.initialBg || "bg-transparent";
-    const scrolledBg = header.dataset.scrolledBg || "bg-white";
-    const darkBg = header.dataset.darkBg || "bg-gray-900";
-    const scrollThreshold = parseInt(header.dataset.scrollThreshold) || 100;
+    const initialBg = header.dataset.initialBg;
+    const scrolledBg = header.dataset.scrolledBg;
+    const darkBg = header.dataset.darkBg;
+    const scrollThreshold = parseInt(header.dataset.scrollThreshold);
     const logoSrc = header.dataset.logo;
     const logoScrolledSrc = header.dataset.logoScrolled;
-
-    header.classList.add(initialBg);
-    if (document.documentElement.classList.contains("dark")) {
-      header.classList.remove(initialBg);
-      header.classList.add(darkBg);
-      if (mainLogo) mainLogo.src = logoScrolledSrc;
-      if (mobileLogo) mobileLogo.src = logoScrolledSrc;
-    }
+    const textInitial = header.dataset.textInitial;
+    const textScrolled = header.dataset.textScrolled;
+    const textDark = header.dataset.textDark;
 
     let lastScrollY = window.scrollY;
     let scrollingTimer;
     let isMenuOpen = false;
 
+    header.classList.add(initialBg);
+    if (document.documentElement.classList.contains("dark")) {
+      header.classList.remove(initialBg);
+      header.classList.add(darkBg);
+      mainLogo.src = logoScrolledSrc;
+      mobileLogo.src = logoScrolledSrc;
+    }
+
     const updateHeaderBackground = () => {
       const currentScrollY = window.scrollY;
       const isDarkMode = document.documentElement.classList.contains("dark");
 
+      // LOGOS
       if (mainLogo) {
         mainLogo.src =
           isDarkMode || currentScrollY > scrollThreshold
@@ -181,6 +189,25 @@ const menuConfig = {
             : logoSrc;
       }
 
+      // TEXTOS
+      menuLinks.forEach((link) => {
+        link.classList.remove(textInitial, textScrolled, textDark);
+        if (isDarkMode) link.classList.add(textDark);
+        else if (currentScrollY > scrollThreshold)
+          link.classList.add(textScrolled);
+        else link.classList.add(textInitial);
+      });
+
+      // ICONOS
+      menuIcons.forEach((icon) => {
+        icon.classList.remove(textInitial, textScrolled, textDark);
+        if (isDarkMode) icon.classList.add(textDark);
+        else if (currentScrollY > scrollThreshold)
+          icon.classList.add(textScrolled);
+        else icon.classList.add(textInitial);
+      });
+
+      // BACKGROUND
       if (isDarkMode) {
         header.classList.add(darkBg);
         header.classList.remove(initialBg, scrolledBg);
@@ -243,7 +270,6 @@ const menuConfig = {
       }
 
       lastScrollY = currentScrollY;
-
       clearTimeout(scrollingTimer);
       scrollingTimer = setTimeout(() => {
         header.classList.remove("-translate-y-full");
@@ -280,7 +306,6 @@ const menuConfig = {
       if (!menu.contains(e.target) && e.target !== menu) closeMenu();
     });
     window.addEventListener("scroll", handleScroll, { passive: true });
-
     updateHeaderBackground();
 
     if (window.matchMedia) {
