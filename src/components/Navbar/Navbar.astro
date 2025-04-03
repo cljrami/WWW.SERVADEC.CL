@@ -1,5 +1,6 @@
 ---
-const logoImage = "/assets/logos/admincondominios.png"; // Ruta personalizable
+const logoImage = "/assets/imagenes/logos/servadec.png";
+const scrolledLogoImage = "/assets/imagenes/logos/servadec.png";
 
 const menuItems = [
   { label: "Inicio", href: "/" },
@@ -10,20 +11,39 @@ const menuItems = [
       { label: "Contabilidad", href: "#contabilidad" },
     ],
   },
-  { label: "Nosotros", href: "#nosotros" },
+  { label: "Nosotros", href: "#planes" },
   { label: "Contacto", href: "#contacto" },
 ];
 
 const mobileImage =
   "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?fit=crop&w=800&q=80";
+
+const menuConfig = {
+  initialBackgroundColor: "bg-transparent",
+  scrolledBackgroundColor: "bg-white",
+  darkModeBackgroundColor: "bg-gray-900",
+  scrollThreshold: 100,
+};
 ---
 
 <header
-  class="fixed top-0 left-0 w-full z-50 bg-white dark:bg-gray-900 shadow-sm transition-all duration-300"
+  id="main-header"
+  class="fixed top-0 left-0 w-full z-50 shadow-none transition-all duration-300"
+  data-initial-bg={menuConfig.initialBackgroundColor}
+  data-scrolled-bg={menuConfig.scrolledBackgroundColor}
+  data-dark-bg={menuConfig.darkModeBackgroundColor}
+  data-scroll-threshold={menuConfig.scrollThreshold}
+  data-logo={logoImage}
+  data-logo-scrolled={scrolledLogoImage}
 >
   <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-    <a href="/" class="flex items-center gap-2">
-      <img src={logoImage} alt="Logo" class="h-8 md:h-10 object-contain" />
+    <a href="/" class="flex items-center gap-2 menu-link">
+      <img
+        id="main-logo"
+        src={logoImage}
+        alt="Logo"
+        class="h-8 md:h-10 object-contain"
+      />
     </a>
 
     <!-- Menú Desktop -->
@@ -33,7 +53,7 @@ const mobileImage =
           <div>
             <a
               href={item.href || "#"}
-              class="text-gray-800 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition font-medium"
+              class="text-gray-800 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition font-medium menu-link"
             >
               {item.label}
             </a>
@@ -51,20 +71,25 @@ const mobileImage =
     </button>
   </div>
 
-  <!-- Overlay y menú lateral -->
+  <!-- Overlay -->
   <div
     id="mobile-overlay"
-    class="fixed inset-0 z-40 hidden bg-black/40 backdrop-blur-sm transition-opacity duration-300"
+    class="fixed inset-0 z-40 pointer-events-none invisible backdrop-blur-sm bg-black/40 opacity-0 transition-all duration-300"
   >
     <aside
       id="mobile-menu"
-      class="absolute right-0 top-0 h-auto max-h-[90vh] w-full bg-white dark:bg-gray-900 shadow-lg transform translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto rounded-bl-xl"
+      class="pointer-events-auto absolute right-0 top-0 h-auto max-h-[90vh] w-full bg-white dark:bg-gray-900 shadow-lg transform translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto rounded-bl-xl"
     >
       <div
         class="flex justify-between items-center px-4 py-4 border-b border-gray-200 dark:border-gray-700"
       >
-        <a href="/" class="flex items-center gap-2">
-          <img src={logoImage} alt="Logo" class="h-8 md:h-10 object-contain" />
+        <a href="/" class="flex items-center gap-2 menu-link">
+          <img
+            id="mobile-logo"
+            src={logoImage}
+            alt="Logo"
+            class="h-8 md:h-10 object-contain"
+          />
         </a>
         <button id="menu-close" class="text-2xl text-gray-800 dark:text-white">
           <i class="fas fa-times"></i>
@@ -94,7 +119,7 @@ const mobileImage =
                     {item.submenu.map((sub) => (
                       <a
                         href={sub.href}
-                        class="px-8 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition"
+                        class="px-8 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition menu-link"
                       >
                         {sub.label}
                       </a>
@@ -104,7 +129,7 @@ const mobileImage =
               ) : (
                 <a
                   href={item.href}
-                  class="px-6 py-4 text-lg font-medium hover:bg-gray-100 dark:hover:bg-gray-800 transition block"
+                  class="px-6 py-4 text-lg font-medium hover:bg-gray-100 dark:hover:bg-gray-800 transition block menu-link"
                 >
                   {item.label}
                 </a>
@@ -121,30 +146,147 @@ const mobileImage =
     const menuClose = document.getElementById("menu-close");
     const overlay = document.getElementById("mobile-overlay");
     const menu = document.getElementById("mobile-menu");
+    const header = document.getElementById("main-header");
+    const menuLinks = document.querySelectorAll(".menu-link");
+    const mainLogo = document.getElementById("main-logo");
+    const mobileLogo = document.getElementById("mobile-logo");
+
+    const initialBg = header.dataset.initialBg || "bg-transparent";
+    const scrolledBg = header.dataset.scrolledBg || "bg-white";
+    const darkBg = header.dataset.darkBg || "bg-gray-900";
+    const scrollThreshold = parseInt(header.dataset.scrollThreshold) || 100;
+    const logoSrc = header.dataset.logo;
+    const logoScrolledSrc = header.dataset.logoScrolled;
+
+    header.classList.add(initialBg);
+    if (document.documentElement.classList.contains("dark")) {
+      header.classList.remove(initialBg);
+      header.classList.add(darkBg);
+      if (mainLogo) mainLogo.src = logoScrolledSrc;
+      if (mobileLogo) mobileLogo.src = logoScrolledSrc;
+    }
+
+    let lastScrollY = window.scrollY;
+    let scrollingTimer;
+    let isMenuOpen = false;
+
+    const updateHeaderBackground = () => {
+      const currentScrollY = window.scrollY;
+      const isDarkMode = document.documentElement.classList.contains("dark");
+
+      if (mainLogo) {
+        mainLogo.src =
+          isDarkMode || currentScrollY > scrollThreshold
+            ? logoScrolledSrc
+            : logoSrc;
+      }
+
+      if (isDarkMode) {
+        header.classList.add(darkBg);
+        header.classList.remove(initialBg, scrolledBg);
+        return;
+      }
+
+      if (currentScrollY > scrollThreshold) {
+        header.classList.add(scrolledBg, "shadow-sm");
+        header.classList.remove(initialBg, "shadow-none");
+      } else {
+        header.classList.add(initialBg, "shadow-none");
+        header.classList.remove(scrolledBg, "shadow-sm");
+      }
+    };
 
     const openMenu = () => {
-      overlay.classList.remove("hidden");
+      overlay.classList.remove("invisible");
+      overlay.classList.add("pointer-events-auto", "opacity-100");
+      overlay.classList.remove("pointer-events-none");
+      menu.classList.remove("translate-x-full");
       document.body.classList.add("overflow-hidden");
-      requestAnimationFrame(() => {
-        overlay.classList.add("opacity-100");
-        menu.classList.remove("translate-x-full");
-      });
+
+      if (mobileLogo) mobileLogo.src = logoScrolledSrc;
+      isMenuOpen = true;
     };
 
     const closeMenu = () => {
       overlay.classList.remove("opacity-100");
       menu.classList.add("translate-x-full");
+
       setTimeout(() => {
-        overlay.classList.add("hidden");
+        overlay.classList.add("invisible");
+        overlay.classList.remove("pointer-events-auto");
+        overlay.classList.add("pointer-events-none");
         document.body.classList.remove("overflow-hidden");
       }, 300);
+
+      if (mobileLogo) mobileLogo.src = logoSrc;
+      isMenuOpen = false;
+    };
+
+    const handleScroll = () => {
+      if (isMenuOpen) {
+        header.classList.remove("-translate-y-full");
+        return;
+      }
+
+      const currentScrollY = window.scrollY;
+      updateHeaderBackground();
+
+      if (currentScrollY < scrollThreshold) {
+        header.classList.remove("-translate-y-full");
+        return;
+      }
+
+      if (currentScrollY > lastScrollY) {
+        header.classList.add("-translate-y-full");
+      } else {
+        header.classList.remove("-translate-y-full");
+      }
+
+      lastScrollY = currentScrollY;
+
+      clearTimeout(scrollingTimer);
+      scrollingTimer = setTimeout(() => {
+        header.classList.remove("-translate-y-full");
+      }, 1000);
+    };
+
+    const handleLinkClick = (e) => {
+      if (isMenuOpen) {
+        const href = e.currentTarget.getAttribute("href");
+        const isAnchor = href && href.startsWith("#");
+
+        closeMenu();
+
+        if (isAnchor) {
+          e.preventDefault();
+          setTimeout(() => {
+            const targetElement = document.querySelector(href);
+            if (targetElement) {
+              targetElement.scrollIntoView({ behavior: "smooth" });
+            } else {
+              window.location.hash = href;
+            }
+          }, 310);
+        }
+      }
     };
 
     menuBtn?.addEventListener("click", openMenu);
     menuClose?.addEventListener("click", closeMenu);
-
-    overlay?.addEventListener("click", (e) => {
-      if (!menu.contains(e.target)) closeMenu();
+    menuLinks.forEach((link) => {
+      link.addEventListener("click", handleLinkClick);
     });
+    overlay?.addEventListener("click", (e) => {
+      if (!menu.contains(e.target) && e.target !== menu) closeMenu();
+    });
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    updateHeaderBackground();
+
+    if (window.matchMedia) {
+      window
+        .matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", updateHeaderBackground);
+    }
   </script>
 </header>

@@ -32,31 +32,3 @@ html {
 }
 
 /* Estilos para el modo oscuro */
-
-/* Ejemplo: Estilos oscuros para enlaces */
-.dark a {
-  color: #fff; /* Un color morado para enlaces en modo oscuro */
-}
-
-/* Ejemplo: Estilos oscuros para botones */
-.dark button {
-  /* background-color: #292929; */
-  color: black;
-}
-.dark footer {
-  background-color: #000;
-  color: white;
-}
-
-.dark footer span .a {
-  color: #000 !important;
-}
-
-.dark a.bg-indigo-500 {
-  background-color: #6366f1; /* Indigo-500 en modo oscuro */
-  color: white;
-}
-
-.dark a.bg-indigo-500:hover {
-  background-color: #4338ca; /* Un tono más oscuro para el hover */
-}
