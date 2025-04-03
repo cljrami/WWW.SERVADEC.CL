@@ -1,13 +1,15 @@
 ---
 //import Footer from "../components/Footer/Footer.astro
 import GlobalSeo from "../components/Seo/GlobalSeo.astro";
-import Footer from "../components/Footer/Footer.jsx";
+import Footer from "../components/Footer/Footer.astro";
 import "@fontsource-variable/inter";
 import "../styles/global.css";
 
 import "animate.css";
 import "aos/dist/aos.css";
-//import DarkModeToggle from "../components/DarkModeToggle/DarkModeToggle";
+import WSPBtn from "../components/WSPBtn/WSPBtn.astro";
+
+//import DarkModeToggle from "../components/DarkModeToggle/DarkModeToggle.astro";
 import Navbar from "../components/Navbar/Navbar.astro";
 
 export interface Props {
@@ -45,10 +47,13 @@ const { title, description, seo } = Astro.props;
     />
   </head>
   <body>
+    <!-- <Navbar client:only="react" /> -->
+
     <Navbar />
     <slot />
+    <WSPBtn />
+    <Footer />
 
-    <Footer client:only="react" />
     <script src="../js/aos"></script>
   </body>
 </html>

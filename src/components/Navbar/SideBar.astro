@@ -1,0 +1,264 @@
+---
+interface NavItem {
+  href: string;
+  text: string;
+  subitems?: Array<{
+    href: string;
+    text: string;
+  }>;
+}
+
+const whatsAppNumber = "1234567890",
+  navItems: NavItem[] = [
+    { href: "#contacto", text: "Inicio" },
+    { href: "#servicios", text: "Servicios" },
+    { href: "#holding", text: "Nuestro Holding" },
+    { href: "#contacto", text: "Contacto" },
+  ];
+---
+
+<nav
+  class="fixed top-0 left-0 right-0 transition-all duration-300 z-40 backdrop-filter backdrop-blur bg-opacity-40 h-28"
+  id="navbar"
+>
+  <div class="max-w-8xl mx-auto px-4 flex h-full animate-fade-down">
+    <div class="flex justify-between w-full items-center">
+      <div class="flex space-x-7">
+        <div>
+          <a href="https://www.idafa.cl/" class="flex items-center py-4 px-2">
+            <img
+              id="navLogo"
+              src="/assets/imagenes/logos/logoNavbar.webp"
+              alt="Logo De Inversiones Dafa"
+              title="Logo De Inversiones Dafa"
+              loading="lazy"
+              class="h-24 transition-all duration-300"
+            />
+          </a>
+        </div>
+      </div>
+      <div class="hidden md:flex items-center space-x-1">
+        {
+          navItems.map((item) => (
+            <div class="relative group">
+              <a
+                href={item.href}
+                class="flex items-center py-4 px-2 text-white dark:text-gray-300 e hover:underline transition duration-300 text-md nav-link font-bold text-xl hover:text-orange-800"
+              >
+                {item.text}
+              </a>
+            </div>
+          ))
+        }
+        <div>
+          <button
+            class="bg-orange-600 hover:bg-gray-600 text-white font-bold p-4 rounded-lg inline-flex items-center transition duration-300 animate-pulse"
+          >
+            <svg
+              class="w-4 h-4 mr-2"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              ><path
+                d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"
+                fill="currentColor"></path></svg
+            >
+            <a
+              href={`https://wa.me/${whatsAppNumber}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex items-center px-4 py-2 rounded-lg text-white bg-green-500 text-sm shadow-md"
+            >
+            </a>
+          </button>
+        </div>
+
+        <div class="md:hidden flex items-center">
+          <button class="outline-none mobile-menu-button" aria-label="Menu">
+            <svg
+              class="w-6 h-6 text-white dark:text-white hover:text-gray-100 dark:hover:text-gray-100"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              id="menuIcon"
+            >
+              <path d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="fixed inset-0 bg-opacity-30 backdrop-blur-sm z-40 hidden"
+    id="overlay"
+  >
+  </div>
+
+  <div
+    class="mobile-menu fixed top-0 right-0 bottom-0 w-64 bg-white z-50 transform translate-x-full transition-transform duration-300 ease-in-out shadow-lg overflow-y-auto"
+  >
+    <div class="flex justify-end p-4">
+      <button
+        class="mobile-menu-close text-black dark:text-white hover:text-gray-900 dark:hover:text-gray-300"
+      >
+        <svg
+          class="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+
+    <ul class="flex flex-col space-y-2 p-4">
+      {
+        navItems.map((item) => (
+          <li>
+            <div class="flex items-center justify-between py-2 px-4 text-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition duration-300 cursor-pointer mobile-menu-link ">
+              <a href={item.href}>{item.text}</a>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+    <div class="p-4">
+      <button
+        class="w-full bg-orange-600 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg inline-flex items-center justify-center transition duration-300"
+      >
+        <svg
+          class="w-4 h-4 mr-2"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          ><path
+            d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"
+            fill="currentColor"></path></svg
+        >
+        <span>Descargar Catálogo</span>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const navbar = document.getElementById("navbar");
+      const mobileMenu = document.querySelector(".mobile-menu");
+      const mobileMenuButton = document.querySelector(".mobile-menu-button");
+      const mobileMenuClose = document.querySelector(".mobile-menu-close");
+      const mobileMenuLinks = document.querySelectorAll(".mobile-menu-link");
+      const overlay = document.getElementById("overlay");
+      const navLinks = document.querySelectorAll(".nav-link");
+      const navLogo = document.getElementById(
+        "navLogo"
+      ) as HTMLImageElement | null;
+      const menuIcon = document.getElementById("menuIcon");
+
+      if (
+        !navbar ||
+        !mobileMenu ||
+        !mobileMenuButton ||
+        !mobileMenuClose ||
+        !overlay ||
+        !navLogo ||
+        !menuIcon
+      ) {
+        console.error(
+          "Uno o más elementos del menú móvil no se encontraron en el DOM"
+        );
+        return;
+      }
+
+      // Función para cerrar el menú móvil
+      const closeMobileMenu = () => {
+        mobileMenu.classList.add("translate-x-full");
+        overlay.classList.add("hidden");
+        menuIcon.classList.remove("text-black");
+        menuIcon.classList.add("text-white");
+      };
+
+      // Función para abrir el menú móvil
+      const openMobileMenu = () => {
+        mobileMenu.classList.remove("translate-x-full");
+        overlay.classList.remove("hidden");
+        menuIcon.classList.remove("text-white");
+        menuIcon.classList.add("text-black");
+      };
+
+      // Abrir menú móvil
+      mobileMenuButton.addEventListener("click", openMobileMenu);
+
+      // Cerrar menú móvil
+      mobileMenuClose.addEventListener("click", closeMobileMenu);
+
+      // Manejar clics en los enlaces del menú móvil
+      mobileMenuLinks.forEach((link) => {
+        link.addEventListener("click", closeMobileMenu);
+      });
+
+      // Cerrar el menú si se hace clic fuera de él
+      overlay.addEventListener("click", closeMobileMenu);
+
+      let lastScrollTop = 0;
+      let isScrolled = false;
+
+      window.addEventListener("scroll", () => {
+        let scrollTop =
+          window.pageYOffset || document.documentElement.scrollTop;
+
+        if (scrollTop > 50 && !isScrolled) {
+          navbar.classList.remove("bg-regal-blue-950", "bg-opacity-40");
+          navbar.classList.add("bg-white", "shadow-md");
+          navLinks.forEach((link) => {
+            link.classList.remove("text-white");
+            link.classList.add("text-black");
+          });
+          if (navLogo) {
+            navLogo.src = "/assets/imagenes/logos/logoNavbarColor.webp";
+          }
+          menuIcon.classList.remove("text-white");
+          menuIcon.classList.add("text-black");
+          isScrolled = true;
+        } else if (scrollTop <= 50 && isScrolled) {
+          navbar.classList.add("bg-regal-blue-950", "bg-opacity-40");
+          navbar.classList.remove("bg-white", "shadow-md");
+          navLinks.forEach((link) => {
+            link.classList.add("text-white");
+            link.classList.remove("text-black");
+          });
+          if (navLogo) {
+            navLogo.src = "/assets/imagenes/logos/logoNavbar.webp";
+          }
+          if (mobileMenu.classList.contains("translate-x-full")) {
+            menuIcon.classList.remove("text-black");
+            menuIcon.classList.add("text-white");
+          }
+          isScrolled = false;
+        }
+
+        if (scrollTop > lastScrollTop) {
+          navbar.style.transform = "translateY(-100%)";
+        } else {
+          navbar.style.transform = "translateY(0)";
+        }
+        lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+      });
+    });
+  </script>
+
+  <style>
+    .active-link {
+      color: #ff0000; /* Cambia esto al color que desees */
+      font-weight: bold;
+    }
+  </style>
+</nav>

@@ -1,31 +1,62 @@
 @import "tailwindcss";
-@import '@fontsource/inter';
+@plugin "flowbite-react/plugin/tailwindcss";
+/* @source "../../.flowbite-react/class-list.json"; */
+
+@import "@fontsource/inter";
 
 body {
-    font-family: 'Inter Variable', sans-serif;
-    color: #000; 
-  }
-  html {
-    overflow-x: hidden;
-    scroll-behavior: smooth;
-   
-    
+  font-family: "Inter Variable", sans-serif;
 }
 
-     /* Scrollbar Styles */
-    ::-webkit-scrollbar {
-      width:6px; /* Adjust the width as needed */
-      height:6px; /* Adjust the height as needed */
-    }
-    ::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: rgba(209, 30, 30, 0.5); /* Adjust the thumb color as needed */
-      border-radius: 3px;
-      
-      height: 6px; 
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: rgba(80, 1, 1, 0.7); /* Adjust the hover thumb color as needed */
-    }
+html {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+/* Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 6px; /* Adjust the width as needed */
+  height: 6px; /* Adjust the height as needed */
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 9, 141, 0.7); /* Adjust the thumb color as needed */
+  border-radius: 3px;
+
+  height: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 9, 141, 0.7); /* Adjust the hover thumb color as needed */
+}
+
+/* Estilos para el modo oscuro */
+
+/* Ejemplo: Estilos oscuros para enlaces */
+.dark a {
+  color: #fff; /* Un color morado para enlaces en modo oscuro */
+}
+
+/* Ejemplo: Estilos oscuros para botones */
+.dark button {
+  /* background-color: #292929; */
+  color: black;
+}
+.dark footer {
+  background-color: #000;
+  color: white;
+}
+
+.dark footer span .a {
+  color: #000 !important;
+}
+
+.dark a.bg-indigo-500 {
+  background-color: #6366f1; /* Indigo-500 en modo oscuro */
+  color: white;
+}
+
+.dark a.bg-indigo-500:hover {
+  background-color: #4338ca; /* Un tono más oscuro para el hover */
+}

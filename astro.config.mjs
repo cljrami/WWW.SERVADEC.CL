@@ -14,6 +14,7 @@ import partytown from '@astrojs/partytown';
 import metaTags from 'astro-meta-tags';
 
 import pageInsight from 'astro-page-insight';
+import flowbiteReact from "flowbite-react/plugin/astro";
 
 // https://astro.build/config
 export default defineConfig({
@@ -23,5 +24,13 @@ site: 'https://www.servadec.cl',
     plugins: [tailwindcss()]
   },
 
-  integrations: [react(), sitemap(), robotsTxt(), partytown(), metaTags(), pageInsight()]
+  integrations: [
+    react(),
+    sitemap(),
+    robotsTxt(),
+    partytown(),
+    metaTags(),
+    pageInsight(),
+    flowbiteReact()
+  ]
 });

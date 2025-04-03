@@ -52,7 +52,7 @@ export default function TestimonialSlider({
   }, [swiperInstance]);
 
   return (
-    <section className="relative py-16 bg-gradient-to-b from-gray-100 to-white">
+    <section className="relative py-16 /*bg-[url(https://images.squarespace-cdn.com/content/v1/5bf47279b27e397e0aeefb5d/1545866445284-D2N9L6KA2RXC41MR9UPH/testimonials_banner-14783a85da9c0229ff28bdaddd9440f3.png)]*/">
       {/* Título y descripción */}
       <div className="max-w-5xl mx-auto text-center">
         <h2 className="text-4xl font-bold text-gray-800 animate-fadeIn">

@@ -1,90 +1,102 @@
 ---
 import WhatsappBtn from "../WhatsApp/WhatsappBtn.astro";
+// TablaValores.astro
 
-const plans = [
-  {
-    name: "Administración",
-    description: "Ideal para gestionar y optimizar recursos con eficiencia.",
-    features: [
-      "Gestión de usuarios",
-      "Monitoreo en tiempo real",
-      "Automatización de tareas",
-      "Reportes detallados",
-      "Seguridad avanzada",
-    ],
-    popular: true, // Destaca esta tarjeta
-  },
-  {
-    name: "Auditorías Condominios",
-    description: "Análisis detallado y auditorías profesionales.",
-    features: [
-      "Evaluación financiera",
-      "Revisión de contratos",
-      "Detección de anomalías",
-      "Optimización de recursos",
-      "Asesoramiento experto",
-    ],
-    popular: false,
-  },
-];
+// Interfaces para definir la estructura de los datos
+interface Plan {
+  title: string; // Título del plan
+  price: string; // Precio del plan (incluye formato)
+  icon: string; // Ícono SVG como cadena
+  description: string; // Descripción breve del plan
+  features: string[]; // Beneficios del plan
+  href: string; // URL del botón "Choose"
+}
+
+// Props para personalizar el contenido del componente
+const {
+  title = "Nuestros Planes", // Título principal
+  subtitle = "texto descritivo", // Subtítulo
+  plans = [
+    {
+      title: "Administracion",
+      price: "mensual",
+      icon: `
+        <i class="fas fa-building text-7xl text-white"></i>
+      `,
+      description: "algo aca",
+      features: ["que se hace", "que se hace", "que se hace", "que se hace"],
+    },
+    {
+      title: "Auditorias",
+      price: "mensual",
+      icon: `
+        <i class="fas fa-building text-7xl text-white"></i>
+      `,
+      description: "algo aca",
+      features: ["que se hace", "que se hace", "que se hace", "que se hace"],
+    },
+  ],
+} = Astro.props;
 ---
 
-<section class="py-20   "id="servicios" >
-  <div class="max-w-6xl mx-auto px-6 lg:px-8">
-    <div class="text-center mb-10">
-      <h2 class="text-4xl font-extrabold  tex-tblack">
-        Nuestros Servicios
-      </h2>
-      <p class="text-lg  text-gray-300">
-        Selecciona el plan que mejor se adapte a tus necesidades.
-      </p>
-    </div>
+<div
+  class="antialiased text-gray-400 p-10 -z-1 bg-[url('https://ww1.prweb.com/prfiles/2018/08/07/15678413/Unknown.jpeg')] pb-30 bg-cover"
+>
+  <div class="mx-auto">
+    <div>
+      <!-- Sección del título -->
+      <div id="title" class="text-center p-10">
+        <h1 class="font-bold text-4xl text-white">{title}</h1>
+        <p class="text-light text-gray-500 text-xl">{subtitle}</p>
+      </div>
 
-    <div class="grid md:grid-cols-2 gap-8">
-      {plans.map((plan) => (
-        <div
-          class={`relative  bg-gray-800 shadow-xl rounded-xl p-8 border border-gray-700 transition-transform transform hover:scale-105 ${
-            plan.popular ? "ring-2 ring-indigo-500" : ""
-          }`}
-        >
-          {plan.popular && (
-            <span
-              class="absolute top-4 right-4 bg-indigo-600 text-white text-xs font-bold uppercase px-3 py-1 rounded-full"
-            >
-              Más Popular
-            </span>
-          )}
+      <!-- Grid de planes -->
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 justify-evenly gap-4 md:max-w-4xl mx-auto"
+      >
+        {
+          plans.map((plan: Plan) => (
+            <div class="text-center overflow-hidden transform hover:scale-105 transition duration-200 ease-in p-10 bg-black/40 backdrop-blur-md border border-white/20 rounded-lg shadow-lg">
+              <div id="title" class="w-full border-b border-gray-200/20 pb-4">
+                <h2 class="font-bold text-3xl text-white">{plan.title}</h2>
+                <h3
+                  class="font-normal text-indigo-400 text-xl"
+                  set:html={plan.price}
+                />
+              </div>
 
-          <h3 class="text-2xl font-bold  text-white mb-3">
-            {plan.name}
-          </h3>
-          <p class=" text-gray-300 mb-4">{plan.description}</p>
+              <div id="content" class="mt-5">
+                <div id="icon" class="flex justify-center">
+                  <div class="my-5" set:html={plan.icon} />
+                </div>
+                <p class="text-gray-300 text-sm">{plan.description}</p>
 
-          <ul class="space-y-2 mb-6">
-            {plan.features.map((feature) => (
-              <li class="flex items-center  text-gray-300">
-                <svg
-                  class="w-5 h-5 text-green-500 mr-2"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
+                <div
+                  id="contain"
+                  class="leading-8 text-lg font-light text-white mt-4 w-full!"
                 >
-                  <path
-                    fill-rule="evenodd"
-                    d="M16.707 5.293a1 1 0 00-1.414 0L8 12.586l-3.293-3.293a1 1 0 00-1.414 1.414l4 4a1 1 0 001.414 0l8-8a1 1 0 000-1.414z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-                {feature}
-              </li>
-            ))}
-          </ul>
-
-          <!-- Botón de WhatsApp -->
-          <div class="text-center">
-            <WhatsappBtn phone="1234567890" />
-          </div>
-        </div>
-      ))}
+                  <ul class="space-y-2">
+                    {plan.features.map((feature: string) => (
+                      <li class="flex items-center gap-2">
+                        <i class="fas fa-check text-green-400" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                  <div class="w-full mt-6  flex justify-center ">
+                    <WhatsappBtn
+                      phone="+56073974224"
+                      text="Conversemos"
+                      message="hola"
+                      clases="bg-gray-900 p-4 rounded-lg animate-pulse"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))
+        }
+      </div>
     </div>
   </div>
-</section>
+</div>

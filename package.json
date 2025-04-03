@@ -6,12 +6,13 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "postinstall": "flowbite-react patch"
   },
   "dependencies": {
     "@astrojs/partytown": "^2.1.4",
     "@astrojs/react": "^4.2.1",
-    "@astrojs/sitemap": "^3.2.1",
+    "@astrojs/sitemap": "^3.3.0",
     "@fontsource-variable/inter": "^5.2.5",
     "@fontsource/inter": "^5.2.5",
     "@tailwindcss/vite": "^4.0.9",
@@ -19,7 +20,7 @@
     "@types/react-dom": "^19.0.4",
     "animate.css": "^4.1.1",
     "aos": "^2.3.4",
-    "astro": "^5.4.0",
+    "astro": "^5.5.4",
     "astro-font": "^1.0.0",
     "astro-icon": "^1.1.5",
     "astro-meta-tags": "^0.3.1",
@@ -27,6 +28,7 @@
     "astro-robots-txt": "^1.0.0",
     "astro-seo": "^0.8.4",
     "astro-seo-schema": "^5.0.0",
+    "flowbite-react": "^0.11.2",
     "framer-motion": "^12.5.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

@@ -3,9 +3,52 @@ import Layout from "../layouts/Layout.astro";
 import Faq from "../components/Faq/Faq.astro";
 import HomeSlider from "../components/HomeSLider/HomeSlider.jsx";
 import TestimonialSlider from "../components/TestimonialSlider/TestimonialSlider.jsx";
-import WSPBtn from "../components/WSPBtn/WSPBtn.astro";
-import Hero from "../components/Hero/Hero.jsx";
-import Tablavalores from "../components/valores/TablaValores.astro";
+
+//import Hero from "../components/Hero/Hero.jsx";
+import Hero from "../components/Hero/Hero.astro";
+import TablaValores from "../components/valores/TablaValores.astro";
+// Define your pricing data
+const tablaData = {
+  heading: "Titular descriptivo de Servicios",
+  cards: [
+    {
+      title: "Auditoría",
+      subtitle: "Auditoría De Condominios.",
+      pricingPeriod: "Mensual",
+      features: [
+        { text: "Revisión de cuentas" },
+        { text: "Informes detallados" },
+        { text: "Verificación documental" },
+        { text: "Reportes personalizados" },
+        { text: "Análisis financiero" },
+        { text: "Recomendaciones estratégicas" },
+      ],
+      footerText: "Consulta gratis",
+      whatsappPhone: "123456789",
+      whatsappMessage: "Estoy interesado en la auditoria de condominios",
+      whatsappBtnText: "Contactar",
+    },
+    {
+      title: "Administración",
+      subtitle: "Administración de Condominios.",
+      pricingPeriod: "Mensual",
+      features: [
+        { text: "Gestión de cobranza" },
+        { text: "Contabilidad completa" },
+        { text: "Atención a residentes" },
+        { text: "Mantenimiento preventivo" },
+        { text: "Reportes mensuales" },
+        { text: "Soporte 24/7" },
+      ],
+      footerText: "Servicio completo",
+      whatsappPhone: "123456789",
+      whatsappMessage: "Estoy interesado en la administración de condominios",
+      whatsappBtnText: "Contactar",
+      highlighted: true,
+      highlightText: "Más Contratado",
+    },
+  ],
+};
 
 // Datos específicos de SEO para la página principal
 const pageTitle = "Inicio";
@@ -74,15 +117,11 @@ const homePageSchema = {
 >
   <!-- Contenido específico de la página principal -->
 
-  <Hero client:only="react" />
-
+  <!-- <Hero client:only="react" /> -->
+  <Hero />
   <HomeSlider client:only="react" />
-  <WSPBtn
-    companyName="Servadec"
-    welcomeMessage="Estamos para atenderte"
-    phoneNumber="+56973974224"
-  />
+
   <Faq />
   <TestimonialSlider client:only="react" />
-  <Tablavalores />
+  <TablaValores />
 </Layout>
