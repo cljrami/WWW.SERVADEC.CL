@@ -4,7 +4,6 @@ import GlobalSeo from "../components/Seo/GlobalSeo.astro";
 import Footer from "../components/Footer/Footer.astro";
 import "@fontsource-variable/inter";
 import "../styles/global.css";
-
 import "animate.css";
 import "aos/dist/aos.css";
 import WSPBtn from "../components/WSPBtn/WSPBtn.astro";
@@ -51,6 +50,7 @@ const { title, description, seo } = Astro.props;
     <Navbar />
     <slot />
     <WSPBtn />
+
     <Footer />
 
     <script src="../js/aos"></script>

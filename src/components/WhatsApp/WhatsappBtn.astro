@@ -6,7 +6,7 @@ interface Props {
   clases?: string;
 }
 
-const { phone, message = "", text = "", clases = "" } = Astro.props;
+const { phone = "", message = "", text = "", clases = "" } = Astro.props;
 
 const encodedMessage = encodeURIComponent(message);
 const waLink = `https://wa.me/${phone}?text=${encodedMessage}`;

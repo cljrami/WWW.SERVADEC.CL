@@ -1,12 +1,14 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Faq from "../components/Faq/Faq.astro";
-import HomeSlider from "../components/HomeSLider/HomeSlider.jsx";
+
 import TestimonialSlider from "../components/TestimonialSlider/TestimonialSlider.jsx";
 
 //import Hero from "../components/Hero/Hero.jsx";
 import Hero from "../components/Hero/Hero.astro";
 import TablaValores from "../components/valores/TablaValores.astro";
+
+import Contacto from "../components/Contacto/Contacto.astro";
 // Define your pricing data
 const tablaData = {
   heading: "Titular descriptivo de Servicios",
@@ -119,9 +121,11 @@ const homePageSchema = {
 
   <!-- <Hero client:only="react" /> -->
   <Hero />
-  <HomeSlider client:only="react" />
+  <!-- <HomeSlider client:only="react" /> -->
 
   <Faq />
   <TestimonialSlider client:only="react" />
   <TablaValores />
+
+  <Contacto />
 </Layout>

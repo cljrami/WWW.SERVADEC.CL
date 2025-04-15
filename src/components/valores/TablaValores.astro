@@ -1,103 +1,175 @@
 ---
 import WhatsappBtn from "../WhatsApp/WhatsappBtn.astro";
-// TablaValores.astro
 
 // Interfaces para definir la estructura de los datos
 interface Plan {
   title: string; // Título del plan
   price: string; // Precio del plan (incluye formato)
+  originalPrice?: string; // Precio original opcional (para mostrar descuento)
+  isPro?: boolean; // Si es plan destacado/premium
   icon: string; // Ícono SVG como cadena
   description: string; // Descripción breve del plan
   features: string[]; // Beneficios del plan
-  href: string; // URL del botón "Choose"
+  // URL del botón
 }
 
 // Props para personalizar el contenido del componente
 const {
-  title = "Nuestros Planes", // Título principal
-  subtitle = "texto descritivo", // Subtítulo
+  title = "Nuestros Servicios",
+  subtitle = "texto descritivo",
+  bgImage = "https://ww1.prweb.com/prfiles/2018/08/07/15678413/Unknown.jpeg",
+
   plans = [
     {
-      title: "Administracion",
-      price: "mensual",
-      icon: `
-        <i class="fas fa-building text-7xl text-white"></i>
-      `,
-      description: "algo aca",
-      features: ["que se hace", "que se hace", "que se hace", "que se hace"],
+      title: "Auditorías",
+      icon: `<i class="fas fa-building text-5xl text-gray-100"></i>`,
+      description: "Para empezar a gestionar",
+      isPro: false,
+      features: [
+        "Análisis de estados financieros",
+        "Verificación de cumplimiento legal",
+        "Detección de irregularidades",
+        "Propuesta de mejoras en la gestión",
+      ],
     },
     {
-      title: "Auditorias",
-      price: "mensual",
-      icon: `
-        <i class="fas fa-building text-7xl text-white"></i>
-      `,
-      description: "algo aca",
-      features: ["que se hace", "que se hace", "que se hace", "que se hace"],
+      title: "Administración",
+      icon: `<i class="fas fa-building text-5xl text-white"></i>`,
+      description: "Gestión integral premium",
+      isPro: true,
+      features: [
+        "Gestión administrativa y financiera",
+        "Supervisión del personal",
+        "Mantención de instalaciones",
+        "Comunicación con la comunidad",
+      ],
     },
   ],
 } = Astro.props;
 ---
 
 <div
-  class="antialiased text-gray-400 p-10 -z-1 bg-[url('https://ww1.prweb.com/prfiles/2018/08/07/15678413/Unknown.jpeg')] pb-30 bg-cover"
+  class="text-gray-400 p-4 sm:p-10 -z-1 bg-cover h-auto min-h-screen flex items-center justify-center"
+  style={`background-image: url('${bgImage}')`}
   id="planes"
 >
-  <div class="mx-auto">
-    <div>
-      <!-- Sección del título -->
-      <div id="title" class="text-center p-10">
-        <h1 class="font-bold text-4xl text-white">{title}</h1>
-        <p class="text-light text-gray-500 text-xl">{subtitle}</p>
-      </div>
+  <div class="w-full mx-auto">
+    <!-- Sección del título -->
+    <div id="title" class="text-center p-4 sm:p-10 mb-4">
+      <h1 class="font-bold text-3xl sm:text-4xl text-white">{title}</h1>
+      <p class="text-light text-gray-300 text-lg sm:text-xl">{subtitle}</p>
+    </div>
 
-      <!-- Grid de planes -->
-      <div
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 justify-evenly gap-4 md:max-w-4xl mx-auto"
-      >
-        {
-          plans.map((plan: Plan) => (
-            <div class="text-center overflow-hidden transform hover:scale-105 transition duration-200 ease-in p-10 bg-black/40 backdrop-blur-md border border-white/20 rounded-lg shadow-lg">
-              <div id="title" class="w-full border-b border-gray-200/20 pb-4">
-                <h2 class="font-bold text-3xl text-white">{plan.title}</h2>
-                <h3
-                  class="font-normal text-indigo-400 text-xl"
-                  set:html={plan.price}
+    <!-- Grid de planes - Cambiado a flex-col para móvil y flex-row para escritorio -->
+    <div
+      class="flex flex-col md:flex-row items-center justify-center max-w-4xl mx-auto gap-6 md:gap-6"
+    >
+      {
+        plans.map((plan: Plan, index: number) =>
+          index % 2 === 0 ? (
+            <div class="w-full text-center  p-6 bg-black/40 backdrop-blur-md border border-white/20 rounded-lg md:rounded-r-none shadow-lg md:w-1/2 hover:scale-105 transition duration-200 ease-in">
+              <div class="mb-6">
+                <h3 class="text-2xl font-semibold text-gray-100 sm:text-4xl">
+                  {plan.title}
+                </h3>
+              </div>
+              <div class="mb-4 space-x-2">
+                <span class="text-4xl font-bold text-gray-100">
+                  {plan.price}
+                </span>
+                {plan.originalPrice && (
+                  <span class="text-2xl text-gray-400 line-through">
+                    {plan.originalPrice}
+                  </span>
+                )}
+              </div>
+              <div class="mb-2 flex justify-center">
+                <div set:html={plan.icon} />
+              </div>
+              <p class="text-gray-300 mb-4">{plan.description}</p>
+              <ul class="mb-6 space-y-2 text-gray-300">
+                {plan.features.map((feature: string) => (
+                  <li class="flex items-center gap-1.5">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="flex-shrink-0 w-5 h-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    <span class="">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+              <div class="w-full flex justify-center z-10">
+                <WhatsappBtn
+                  phone="+56073974224"
+                  text="Conversemos"
+                  message="hola estoy interesado en saber sobre ...."
+                  clases="bg-gray-900 p-4 rounded-lg animate-pulse"
                 />
               </div>
-
-              <div id="content" class="mt-5">
-                <div id="icon" class="flex justify-center">
-                  <div class="my-5" set:html={plan.icon} />
+            </div>
+          ) : (
+            <div class="w-full p-10 rounded-lg shadow-xl md:w-1/2 bg-gradient-to-br from-blue-600 to-purple-600 transform hover:scale-105 transition duration-200 ease-in">
+              <div class="flex flex-col items-start justify-between gap-4 mb-6 lg:flex-row">
+                <div>
+                  <h3 class="text-2xl font-semibold text-white sm:text-4xl">
+                    {plan.title}
+                  </h3>
                 </div>
-                <p class="text-gray-300 text-sm">{plan.description}</p>
-
-                <div
-                  id="contain"
-                  class="leading-8 text-lg font-light text-white mt-4 w-full!"
-                >
-                  <ul class="space-y-2">
-                    {plan.features.map((feature: string) => (
-                      <li class="flex items-center gap-2">
-                        <i class="fas fa-check text-green-400" />
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                  <div class="w-full mt-6  flex justify-center ">
-                    <WhatsappBtn
-                      phone="+56073974224"
-                      text="Conversemos"
-                      message="hola"
-                      clases="bg-gray-900 p-4 rounded-lg animate-pulse"
-                    />
-                  </div>
-                </div>
+                <span class="order-first inline-block px-3 py-1 text-xs font-semibold tracking-wider text-white uppercase bg-black rounded-full lg:order-none bg-opacity-20">
+                  Pro
+                </span>
+              </div>
+              <div class="mb-4 space-x-2">
+                <span class="text-4xl font-bold text-white">{plan.price}</span>
+                {plan.originalPrice && (
+                  <span class="text-2xl text-indigo-100 line-through">
+                    {plan.originalPrice}
+                  </span>
+                )}
+              </div>
+              <div class="mb-2 flex justify-center">
+                <div set:html={plan.icon} />
+              </div>
+              <p class="text-indigo-100 mb-4">{plan.description}</p>
+              <ul class="mb-6 space-y-2 text-indigo-100">
+                {plan.features.map((feature: string) => (
+                  <li class="flex items-center gap-1.5">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="flex-shrink-0 w-5 h-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    <span class="">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+              <div class="w-full flex justify-center">
+                <WhatsappBtn
+                  phone="+56073974224"
+                  text="Conversemos"
+                  message="holaAAAAAA"
+                  clases="bg-gray-900 p-4 rounded-lg animate-pulse"
+                />
               </div>
             </div>
-          ))
-        }
-      </div>
+          )
+        )
+      }
     </div>
   </div>
 </div>

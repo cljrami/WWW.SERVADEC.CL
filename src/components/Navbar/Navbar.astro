@@ -1,18 +1,27 @@
 ---
+// src/components/Header.astro
+import WhatsappBtn from "../WhatsApp/WhatsappBtn.astro";
+
 const logoImage = "/assets/imagenes/logos/servadec.png";
 const scrolledLogoImage = "/assets/imagenes/logos/servadec.png";
 
-const menuItems = [
+interface MenuItem {
+  label: string;
+  href?: string;
+  submenu?: { label: string; href: string }[];
+}
+
+const menuItems: MenuItem[] = [
   { label: "Inicio", href: "/" },
-  {
-    label: "Servicios",
-    submenu: [
-      { label: "Administración", href: "#admin" },
-      { label: "Contabilidad", href: "#contabilidad" },
-    ],
-  },
-  { label: "Nosotros", href: "#planes" },
-  { label: "Contacto", href: "#contacto" },
+  // {
+  //   label: "Servicios",
+  //    submenu: [
+  //      { label: "Administración", href: "#admin" },
+  //      { label: "Contabilidad", href: "#contabilidad" },
+  //   ],
+  // },
+  { label: "Servicios", href: "#planes" },
+  { label: "Contacto", href: "#contactForm" },
 ];
 
 const mobileImage =
@@ -54,15 +63,42 @@ const menuConfig = {
       {
         menuItems.map((item) => (
           <div>
-            <a
-              href={item.href || "#"}
-              class="menu-link font-medium transition duration-300"
-            >
-              {item.label}
-            </a>
+            {item.submenu ? (
+              <details class="group">
+                <summary class="flex items-center cursor-pointer hover:text-gray-700">
+                  {item.label}
+                  <i class="ml-2 fas fa-chevron-down transition-transform duration-300 group-open:rotate-180" />
+                </summary>
+                <ul class="mt-2 pl-4">
+                  {item.submenu.map((subItem) => (
+                    <li>
+                      <a
+                        href={subItem.href}
+                        class="block py-1 hover:text-gray-700 transition menu-link"
+                      >
+                        {subItem.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            ) : (
+              <a
+                href={item.href || "#"}
+                class="font-medium hover:text-gray-700 transition menu-link"
+              >
+                {item.label}
+              </a>
+            )}
           </div>
         ))
       }
+      <WhatsappBtn
+        phone="+56073974224"
+        text="Conversemos"
+        message="hola"
+        clases="bg-green-500 text-white p-3 rounded-md shadow-lg hover:bg-green-600 transition-all duration-300 flex items-center justify-center group focus:outline-none focus:ring-2 focus:ring-green-400"
+      />
     </nav>
 
     <!-- Botón menú móvil -->
@@ -131,7 +167,7 @@ const menuConfig = {
                 </details>
               ) : (
                 <a
-                  href={item.href}
+                  href={item.href || "#"}
                   class="px-6 py-4 text-lg font-medium hover:bg-gray-100 dark:hover:bg-gray-800 transition block menu-link"
                 >
                   {item.label}
@@ -140,6 +176,12 @@ const menuConfig = {
             </div>
           ))
         }
+        <WhatsappBtn
+          phone="+56073974224"
+          text="Conversemos"
+          message="hola"
+          clases="bg-gray-900 p-4 rounded-lg animate-pulse"
+        />
       </nav>
     </aside>
   </div>
